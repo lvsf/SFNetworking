@@ -1,0 +1,569 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1782426B1FE2791D00018669 /* SFURLTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782426A1FE2791D00018669 /* SFURLTaskConfiguration.m */; };
+		17AC68DB1FDE27ED0042160E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68DA1FDE27ED0042160E /* AppDelegate.m */; };
+		17AC68DE1FDE27ED0042160E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68DD1FDE27ED0042160E /* ViewController.m */; };
+		17AC68E11FDE27ED0042160E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AC68DF1FDE27ED0042160E /* Main.storyboard */; };
+		17AC68E31FDE27ED0042160E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17AC68E21FDE27ED0042160E /* Assets.xcassets */; };
+		17AC68E61FDE27ED0042160E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AC68E41FDE27ED0042160E /* LaunchScreen.storyboard */; };
+		17AC68E91FDE27EE0042160E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68E81FDE27EE0042160E /* main.m */; };
+		17AC69181FDE29730042160E /* SFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */; };
+		17AC69191FDE29730042160E /* SFHTTPResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */; };
+		17AC691A1FDE29730042160E /* SFURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F61FDE29730042160E /* SFURLResponse.m */; };
+		17AC691B1FDE29730042160E /* SFURLTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F71FDE29730042160E /* SFURLTaskManager.m */; };
+		17AC691C1FDE29730042160E /* SFURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68FA1FDE29730042160E /* SFURLRequest.m */; };
+		17AC691D1FDE29730042160E /* SFNetworingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68FB1FDE29730042160E /* SFNetworingManager.m */; };
+		17AC691E1FDE29730042160E /* SFURLError.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68FC1FDE29730042160E /* SFURLError.m */; };
+		17AC691F1FDE29730042160E /* SFURLTaskPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68FD1FDE29730042160E /* SFURLTaskPage.m */; };
+		17AC69201FDE29730042160E /* SFURLTaskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69041FDE29730042160E /* SFURLTaskCache.m */; };
+		17AC69211FDE29730042160E /* UIResponder+SFAddNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69061FDE29730042160E /* UIResponder+SFAddNetworking.m */; };
+		17AC69221FDE29730042160E /* SFURLTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69081FDE29730042160E /* SFURLTask.m */; };
+		17AC69231FDE29730042160E /* SFHTTPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69091FDE29730042160E /* SFHTTPTask.m */; };
+		17AC69241FDE29730042160E /* SFUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC690B1FDE29730042160E /* SFUploadTask.m */; };
+		17AC69251FDE29730042160E /* SFDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC690C1FDE29730042160E /* SFDownloadTask.m */; };
+		17AC69261FDE29730042160E /* SFURLTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC690F1FDE29730042160E /* SFURLTaskGroup.m */; };
+		17AC69271FDE29730042160E /* SFURLTaskLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69161FDE29730042160E /* SFURLTaskLog.m */; };
+		17AC69281FDE29730042160E /* SFURLTaskLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69171FDE29730042160E /* SFURLTaskLogger.m */; };
+		17FA96DE1FE216E000C250C9 /* SFURLTaskFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */; };
+		D069DECBE0221EFBF6472552 /* libPods-SFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62343E662728F0BB05106442 /* libPods-SFNetworking.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		178242691FE2791D00018669 /* SFURLTaskConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFURLTaskConfiguration.h; sourceTree = "<group>"; };
+		1782426A1FE2791D00018669 /* SFURLTaskConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskConfiguration.m; sourceTree = "<group>"; };
+		17AC68D61FDE27ED0042160E /* SFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17AC68D91FDE27ED0042160E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		17AC68DA1FDE27ED0042160E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		17AC68DC1FDE27ED0042160E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		17AC68DD1FDE27ED0042160E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		17AC68E01FDE27ED0042160E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17AC68E21FDE27ED0042160E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17AC68E51FDE27ED0042160E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		17AC68E71FDE27EE0042160E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17AC68E81FDE27EE0042160E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHTTPRequestSerializer.m; sourceTree = "<group>"; };
+		17AC68F21FDE29730042160E /* SFHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHTTPResponseSerializer.h; sourceTree = "<group>"; };
+		17AC68F31FDE29730042160E /* SFHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHTTPRequestSerializer.h; sourceTree = "<group>"; };
+		17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHTTPResponseSerializer.m; sourceTree = "<group>"; };
+		17AC68F61FDE29730042160E /* SFURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLResponse.m; sourceTree = "<group>"; };
+		17AC68F71FDE29730042160E /* SFURLTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskManager.m; sourceTree = "<group>"; };
+		17AC68F81FDE29730042160E /* SFURLTaskPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskPage.h; sourceTree = "<group>"; };
+		17AC68FA1FDE29730042160E /* SFURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLRequest.m; sourceTree = "<group>"; };
+		17AC68FB1FDE29730042160E /* SFNetworingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFNetworingManager.m; sourceTree = "<group>"; };
+		17AC68FC1FDE29730042160E /* SFURLError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLError.m; sourceTree = "<group>"; };
+		17AC68FD1FDE29730042160E /* SFURLTaskPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskPage.m; sourceTree = "<group>"; };
+		17AC68FE1FDE29730042160E /* SFURLTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskManager.h; sourceTree = "<group>"; };
+		17AC68FF1FDE29730042160E /* SFURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLResponse.h; sourceTree = "<group>"; };
+		17AC69001FDE29730042160E /* SFURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLRequest.h; sourceTree = "<group>"; };
+		17AC69011FDE29730042160E /* SFNetworingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFNetworingManager.h; sourceTree = "<group>"; };
+		17AC69021FDE29730042160E /* SFURLError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLError.h; sourceTree = "<group>"; };
+		17AC69041FDE29730042160E /* SFURLTaskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskCache.m; sourceTree = "<group>"; };
+		17AC69051FDE29730042160E /* SFURLTaskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskCache.h; sourceTree = "<group>"; };
+		17AC69061FDE29730042160E /* UIResponder+SFAddNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+SFAddNetworking.m"; sourceTree = "<group>"; };
+		17AC69081FDE29730042160E /* SFURLTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTask.m; sourceTree = "<group>"; };
+		17AC69091FDE29730042160E /* SFHTTPTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHTTPTask.m; sourceTree = "<group>"; };
+		17AC690A1FDE29730042160E /* SFURLTaskGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskGroup.h; sourceTree = "<group>"; };
+		17AC690B1FDE29730042160E /* SFUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFUploadTask.m; sourceTree = "<group>"; };
+		17AC690C1FDE29730042160E /* SFDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDownloadTask.m; sourceTree = "<group>"; };
+		17AC690D1FDE29730042160E /* SFHTTPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHTTPTask.h; sourceTree = "<group>"; };
+		17AC690E1FDE29730042160E /* SFURLTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTask.h; sourceTree = "<group>"; };
+		17AC690F1FDE29730042160E /* SFURLTaskGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskGroup.m; sourceTree = "<group>"; };
+		17AC69101FDE29730042160E /* SFDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDownloadTask.h; sourceTree = "<group>"; };
+		17AC69111FDE29730042160E /* SFUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUploadTask.h; sourceTree = "<group>"; };
+		17AC69121FDE29730042160E /* UIResponder+SFAddNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+SFAddNetworking.h"; sourceTree = "<group>"; };
+		17AC69141FDE29730042160E /* SFURLTaskLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskLog.h; sourceTree = "<group>"; };
+		17AC69151FDE29730042160E /* SFURLTaskLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskLogger.h; sourceTree = "<group>"; };
+		17AC69161FDE29730042160E /* SFURLTaskLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskLog.m; sourceTree = "<group>"; };
+		17AC69171FDE29730042160E /* SFURLTaskLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskLogger.m; sourceTree = "<group>"; };
+		17FA96DC1FE216E000C250C9 /* SFURLTaskFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFURLTaskFilter.h; sourceTree = "<group>"; };
+		17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskFilter.m; sourceTree = "<group>"; };
+		1B499CA87D2D08997AA29B7A /* Pods-SFNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SFNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking.release.xcconfig"; sourceTree = "<group>"; };
+		62343E662728F0BB05106442 /* libPods-SFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SFNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FD067AC9BF54D6E0193EC8E /* Pods-SFNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SFNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		17AC68D31FDE27ED0042160E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D069DECBE0221EFBF6472552 /* libPods-SFNetworking.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C92344628F6A97584C62C53 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62343E662728F0BB05106442 /* libPods-SFNetworking.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		17AC68CD1FDE27ED0042160E = {
+			isa = PBXGroup;
+			children = (
+				17AC68D81FDE27ED0042160E /* SFNetworking */,
+				17AC68D71FDE27ED0042160E /* Products */,
+				32AE25E7D4DE6A2C8C25A47F /* Pods */,
+				0C92344628F6A97584C62C53 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		17AC68D71FDE27ED0042160E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17AC68D61FDE27ED0042160E /* SFNetworking.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17AC68D81FDE27ED0042160E /* SFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				17AC68EF1FDE29730042160E /* Class */,
+				17AC68D91FDE27ED0042160E /* AppDelegate.h */,
+				17AC68DA1FDE27ED0042160E /* AppDelegate.m */,
+				17AC68DC1FDE27ED0042160E /* ViewController.h */,
+				17AC68DD1FDE27ED0042160E /* ViewController.m */,
+				17AC68DF1FDE27ED0042160E /* Main.storyboard */,
+				17AC68E21FDE27ED0042160E /* Assets.xcassets */,
+				17AC68E41FDE27ED0042160E /* LaunchScreen.storyboard */,
+				17AC68E71FDE27EE0042160E /* Info.plist */,
+				17AC68E81FDE27EE0042160E /* main.m */,
+			);
+			path = SFNetworking;
+			sourceTree = "<group>";
+		};
+		17AC68EF1FDE29730042160E /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				17AC68F51FDE29730042160E /* Core */,
+				17AC69071FDE29730042160E /* Task */,
+				17AC68F01FDE29730042160E /* Serializer */,
+				17AC69031FDE29730042160E /* Cache */,
+				17AC69131FDE29730042160E /* Debug */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		17AC68F01FDE29730042160E /* Serializer */ = {
+			isa = PBXGroup;
+			children = (
+				17AC68F31FDE29730042160E /* SFHTTPRequestSerializer.h */,
+				17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */,
+				17AC68F21FDE29730042160E /* SFHTTPResponseSerializer.h */,
+				17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */,
+			);
+			path = Serializer;
+			sourceTree = "<group>";
+		};
+		17AC68F51FDE29730042160E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				17AC69021FDE29730042160E /* SFURLError.h */,
+				17AC68FC1FDE29730042160E /* SFURLError.m */,
+				17AC69001FDE29730042160E /* SFURLRequest.h */,
+				17AC68FA1FDE29730042160E /* SFURLRequest.m */,
+				17AC68FF1FDE29730042160E /* SFURLResponse.h */,
+				17AC68F61FDE29730042160E /* SFURLResponse.m */,
+				17AC68F81FDE29730042160E /* SFURLTaskPage.h */,
+				17AC68FD1FDE29730042160E /* SFURLTaskPage.m */,
+				178242691FE2791D00018669 /* SFURLTaskConfiguration.h */,
+				1782426A1FE2791D00018669 /* SFURLTaskConfiguration.m */,
+				17AC68FE1FDE29730042160E /* SFURLTaskManager.h */,
+				17AC68F71FDE29730042160E /* SFURLTaskManager.m */,
+				17AC69011FDE29730042160E /* SFNetworingManager.h */,
+				17AC68FB1FDE29730042160E /* SFNetworingManager.m */,
+				17AC69121FDE29730042160E /* UIResponder+SFAddNetworking.h */,
+				17AC69061FDE29730042160E /* UIResponder+SFAddNetworking.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		17AC69031FDE29730042160E /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				17AC69051FDE29730042160E /* SFURLTaskCache.h */,
+				17AC69041FDE29730042160E /* SFURLTaskCache.m */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		17AC69071FDE29730042160E /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				17AC690E1FDE29730042160E /* SFURLTask.h */,
+				17AC69081FDE29730042160E /* SFURLTask.m */,
+				17AC690D1FDE29730042160E /* SFHTTPTask.h */,
+				17AC69091FDE29730042160E /* SFHTTPTask.m */,
+				17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */,
+				17AC69111FDE29730042160E /* SFUploadTask.h */,
+				17AC690B1FDE29730042160E /* SFUploadTask.m */,
+				17AC690C1FDE29730042160E /* SFDownloadTask.m */,
+				17AC69101FDE29730042160E /* SFDownloadTask.h */,
+				17AC690A1FDE29730042160E /* SFURLTaskGroup.h */,
+				17AC690F1FDE29730042160E /* SFURLTaskGroup.m */,
+				17FA96DC1FE216E000C250C9 /* SFURLTaskFilter.h */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		17AC69131FDE29730042160E /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				17AC69141FDE29730042160E /* SFURLTaskLog.h */,
+				17AC69161FDE29730042160E /* SFURLTaskLog.m */,
+				17AC69151FDE29730042160E /* SFURLTaskLogger.h */,
+				17AC69171FDE29730042160E /* SFURLTaskLogger.m */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		32AE25E7D4DE6A2C8C25A47F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6FD067AC9BF54D6E0193EC8E /* Pods-SFNetworking.debug.xcconfig */,
+				1B499CA87D2D08997AA29B7A /* Pods-SFNetworking.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		17AC68D51FDE27ED0042160E /* SFNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17AC68EC1FDE27EE0042160E /* Build configuration list for PBXNativeTarget "SFNetworking" */;
+			buildPhases = (
+				BAEB3600763A4D55A7FCA231 /* [CP] Check Pods Manifest.lock */,
+				17AC68D21FDE27ED0042160E /* Sources */,
+				17AC68D31FDE27ED0042160E /* Frameworks */,
+				17AC68D41FDE27ED0042160E /* Resources */,
+				9C13FEEB88E013A366361E6D /* [CP] Embed Pods Frameworks */,
+				16E389932BD93D7759DB3998 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SFNetworking;
+			productName = SFNetworking;
+			productReference = 17AC68D61FDE27ED0042160E /* SFNetworking.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17AC68CE1FDE27ED0042160E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = YunSL;
+				TargetAttributes = {
+					17AC68D51FDE27ED0042160E = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 17AC68D11FDE27ED0042160E /* Build configuration list for PBXProject "SFNetworking" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 17AC68CD1FDE27ED0042160E;
+			productRefGroup = 17AC68D71FDE27ED0042160E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				17AC68D51FDE27ED0042160E /* SFNetworking */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		17AC68D41FDE27ED0042160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17AC68E61FDE27ED0042160E /* LaunchScreen.storyboard in Resources */,
+				17AC68E31FDE27ED0042160E /* Assets.xcassets in Resources */,
+				17AC68E11FDE27ED0042160E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16E389932BD93D7759DB3998 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C13FEEB88E013A366361E6D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BAEB3600763A4D55A7FCA231 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SFNetworking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		17AC68D21FDE27ED0042160E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1782426B1FE2791D00018669 /* SFURLTaskConfiguration.m in Sources */,
+				17AC69251FDE29730042160E /* SFDownloadTask.m in Sources */,
+				17AC69271FDE29730042160E /* SFURLTaskLog.m in Sources */,
+				17AC69181FDE29730042160E /* SFHTTPRequestSerializer.m in Sources */,
+				17AC691D1FDE29730042160E /* SFNetworingManager.m in Sources */,
+				17AC691A1FDE29730042160E /* SFURLResponse.m in Sources */,
+				17AC69211FDE29730042160E /* UIResponder+SFAddNetworking.m in Sources */,
+				17AC691F1FDE29730042160E /* SFURLTaskPage.m in Sources */,
+				17AC69191FDE29730042160E /* SFHTTPResponseSerializer.m in Sources */,
+				17AC691B1FDE29730042160E /* SFURLTaskManager.m in Sources */,
+				17AC69221FDE29730042160E /* SFURLTask.m in Sources */,
+				17AC68DE1FDE27ED0042160E /* ViewController.m in Sources */,
+				17AC68E91FDE27EE0042160E /* main.m in Sources */,
+				17AC69241FDE29730042160E /* SFUploadTask.m in Sources */,
+				17AC691C1FDE29730042160E /* SFURLRequest.m in Sources */,
+				17AC68DB1FDE27ED0042160E /* AppDelegate.m in Sources */,
+				17AC69201FDE29730042160E /* SFURLTaskCache.m in Sources */,
+				17AC69261FDE29730042160E /* SFURLTaskGroup.m in Sources */,
+				17AC691E1FDE29730042160E /* SFURLError.m in Sources */,
+				17AC69231FDE29730042160E /* SFHTTPTask.m in Sources */,
+				17AC69281FDE29730042160E /* SFURLTaskLogger.m in Sources */,
+				17FA96DE1FE216E000C250C9 /* SFURLTaskFilter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		17AC68DF1FDE27ED0042160E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17AC68E01FDE27ED0042160E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		17AC68E41FDE27ED0042160E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17AC68E51FDE27ED0042160E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		17AC68EA1FDE27EE0042160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		17AC68EB1FDE27EE0042160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		17AC68ED1FDE27EE0042160E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FD067AC9BF54D6E0193EC8E /* Pods-SFNetworking.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SFNetworking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunSL.SFNetworking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17AC68EE1FDE27EE0042160E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B499CA87D2D08997AA29B7A /* Pods-SFNetworking.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SFNetworking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunSL.SFNetworking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17AC68D11FDE27ED0042160E /* Build configuration list for PBXProject "SFNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17AC68EA1FDE27EE0042160E /* Debug */,
+				17AC68EB1FDE27EE0042160E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17AC68EC1FDE27EE0042160E /* Build configuration list for PBXNativeTarget "SFNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17AC68ED1FDE27EE0042160E /* Debug */,
+				17AC68EE1FDE27EE0042160E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17AC68CE1FDE27ED0042160E /* Project object */;
+}
