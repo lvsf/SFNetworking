@@ -17,7 +17,6 @@
     response.reformerObject = responseObject;
     response.code = error.code;
     response.message = error.message;
-    response.fromCache = NO;
     return response;
 }
 

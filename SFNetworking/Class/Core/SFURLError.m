@@ -17,6 +17,14 @@
     return error;
 }
 
++ (instancetype)errorWithCustomCode:(NSInteger)code message:(NSString *)message {
+    SFURLError *error = [self new];
+    error.code = SFURLErrorCustom;
+    error.customCode = code;
+    error.message = message;
+    return error;
+}
+
 + (instancetype)errorWithError:(NSError *)error {
     return [self errorWithCode:error.code message:error.localizedDescription];
 }

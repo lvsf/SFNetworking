@@ -6,4 +6,5 @@ inhibit_all_warnings!
 # 网络请求管理
 pod 'AFNetworking'
 pod 'YYCache'
+pod 'MBProgressHUD'
 end

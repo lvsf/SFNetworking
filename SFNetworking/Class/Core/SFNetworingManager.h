@@ -13,12 +13,11 @@
 #import "SFUploadTask.h"
 #import "SFDownloadTask.h"
 #import "SFURLTaskGroup.h"
-#import "SFURLTaskConfiguration.h"
 
 @interface SFNetworingManager : NSObject
 + (instancetype)manager;
 - (void)sendTask:(SFURLTask *)task;
-- (void)sendTask:(SFURLTask *)task configuration:(SFURLTaskConfiguration *)configuration;
+- (void)cancelTask:(SFURLTask *)task;
 @end
 
 @interface SFNetworingManager(SFAddTaskGroup)

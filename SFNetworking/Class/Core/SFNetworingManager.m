@@ -7,10 +7,8 @@
 //
 
 #import "SFNetworingManager.h"
-#import "SFURLTaskManger.h"
 #import "SFURLTaskCache.h"
 #import "SFURLTaskLogger.h"
-#import "SFURLTaskLog.h"
 #import <AFNetworking.h>
 #import <objc/runtime.h>
 
@@ -37,226 +35,233 @@
 }
 
 - (void)sendTask:(SFURLTask *)task {
-    [self sendTask:task completion:nil];
+    __weak typeof(task) w_task = task;
+    dispatch_async(self.taskQueue, ^{
+        __strong typeof(w_task) task = w_task;
+        [self sendTask:task completion:nil];
+    });
+}
+
+- (void)cancelTask:(SFURLTask *)task {
+    
 }
 
 - (void)sendTask:(SFURLTask *)task completion:(void(^)(SFURLResponse *response))completion {
-    SFURLRequest *request = [self requestWithTask:task];
-    SFURLError *error = [self shouldSendTask:task request:request];
-    task.debugLog = [SFURLTaskLog new];
-    task.debugLog.request = request;
-    task.debugLog.sendDate = [NSDate date];
+    //准备发送
+    [self prepareSendTask:task];
+    //允许发送
+    SFURLError *error = [self shouldSendTask:task];
     if (error) {
-        [self didCompleteTask:task
-                     response:[SFURLResponse responseWithURLSessionDataTask:nil
-                                                             responseObject:nil
-                                                                      error:error]];
+        SFURLResponse *response = [SFURLResponse responseWithURLSessionDataTask:nil
+                                                                 responseObject:nil
+                                                                          error:error];
+        [self completeTask:task response:response];
         return;
     }
-    
+    //即将发送
     [self willSendTask:task];
-    
-    @sf_weakify(self)
+    //HTTP
     if ([task isKindOfClass:[SFHTTPTask class]]) {
         SFHTTPTask *httpTask = (SFHTTPTask *)task;
+        SFURLRequest *request = httpTask.request;
         AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-        objc_setAssociatedObject(self, _cmd, sessionManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         sessionManager.requestSerializer = request.requestSerializer;
         sessionManager.responseSerializer = request.responseSerializer;
+        self.httpTasks[httpTask.identifier] = httpTask;
         switch (httpTask.method) {
             case SFHTTPMethodGET:{
                 [sessionManager GET:request.URL parameters:request.parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    @sf_strongify(self)
-                    [self completeTask:httpTask
-                              dataTask:task
-                        responseObject:responseObject
-                                 error:nil];
+                    [self completeRequestWithTask:httpTask
+                                         dataTask:task
+                                   responseObject:responseObject
+                                            error:nil
+                                       completion:completion];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    @sf_strongify(self)
-                    [self completeTask:httpTask
-                              dataTask:task
-                        responseObject:nil
-                                 error:error];
+                    [self completeRequestWithTask:httpTask
+                                         dataTask:task
+                                   responseObject:nil
+                                            error:error
+                                       completion:completion];
                 }];
             }
                 break;
             case SFHTTPMethodPOST:{
                 [sessionManager POST:request.URL parameters:request.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-                    if (httpTask.formData) {
-                        [formData appendPartWithFileData:httpTask.formData.data
-                                                    name:httpTask.formData.name
-                                                fileName:httpTask.formData.fileName
-                                                mimeType:httpTask.formData.mimeType];
+                    if (httpTask.formDatas) {
+                        [httpTask.formDatas enumerateObjectsUsingBlock:^(id<SFHTTPFormDateProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            [formData appendPartWithFileData:obj.data
+                                                        name:obj.name
+                                                    fileName:obj.fileName
+                                                    mimeType:obj.mimeType];
+                        }];
                     }
                 } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    @sf_strongify(self)
-                    [self completeTask:httpTask
-                              dataTask:task
-                        responseObject:responseObject
-                                 error:nil];
+                    [self completeRequestWithTask:httpTask
+                                         dataTask:task
+                                   responseObject:responseObject
+                                            error:nil
+                                       completion:completion];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    @sf_strongify(self)
-                    [self completeTask:httpTask
-                              dataTask:task
-                        responseObject:nil
-                                 error:error];
+                    [self completeRequestWithTask:httpTask
+                                         dataTask:task
+                                   responseObject:nil
+                                            error:error
+                                       completion:completion];
                 }];
             }
                 break;
             default:
                 break;
         }
-        self.httpTasks[httpTask.hashKey] = httpTask;
     }
 }
 
-- (void)checkCacheForTask:(SFURLTask *)task {
-    if ([[SFURLTaskCache sharedInstance] containResponseObjectWithTask:task]) {
-        id responseObject = [[SFURLTaskCache sharedInstance] getResponseObjectWithTask:task];
-        SFURLResponse *response = [self responseWithURLSessionTask:nil
-                                                    responseObject:responseObject
-                                                             error:nil
-                                                           forTask:task];
-        response.fromCache = YES;
-        if ([task.delegate respondsToSelector:@selector(task:didCompleteWithResponse:)]) {
-            [task.delegate task:task didCompleteWithResponse:response];
-        }
-        if (task.completeBlock) {
-            task.completeBlock(task, response);
-        }
+- (SFURLError *)shouldSendTask:(SFURLTask *)task {
+    //1.网络检查
+    if ([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+        return [SFURLError errorWithCustomCode:SFURLErrorCustomCodeNetworkNotReachable message:@"[NotConnectedToInternet]"];
+    }
+    //2.重复检查
+    if (self.allTasks[task.identifier]) {
+        return [SFURLError errorWithCustomCode:SFURLErrorCustomCodeFrequently message:@"[Frequently]"];
+    }
+    //3.外部检查
+    SFURLError *error = nil;
+    task.request = [self requestWithTask:task];
+    if (task.filter.shouldSend) {
+        error = task.filter.shouldSend(task,task.request);
+    }
+    else if ([task.filter respondsToSelector:@selector(task:shouldSendWithRequest:)]) {
+        error = [task.filter task:task shouldSendWithRequest:task.request];
+    }
+    return error;
+}
+
+- (void)prepareSendTask:(SFURLTask *)task {
+    if ([task.interaction.delegate respondsToSelector:@selector(task:beginInteractionWithRequest:)]) {
+        [task.interaction.delegate task:task beginInteractionWithRequest:task.request];
     }
 }
 
 - (void)willSendTask:(SFURLTask *)task {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([task.interaction respondsToSelector:@selector(taskWillSend:)]) {
-            [task.interaction taskWillSend:task];
+        if (task.willSend) {
+            task.willSend(task);
         }
         if ([task.delegate respondsToSelector:@selector(taskWillSend:)]) {
             [task.delegate taskWillSend:task];
         }
-        [self checkCacheForTask:task];
+        if (task.cache) {
+            if ([[SFURLTaskCache sharedInstance] containResponseObjectWithTask:task]) {
+                id responseObject = [[SFURLTaskCache sharedInstance] getResponseObjectWithTask:task];
+                SFURLResponse *response = [self responseWithURLSessionTask:nil
+                                                            responseObject:responseObject
+                                                                     error:nil
+                                                                   forTask:task];
+                if (task.hitCache) {
+                    task.hitCache(task, response);
+                }
+                if ([task.delegate respondsToSelector:@selector(task:didHitCacheWithResponse:)]) {
+                    [task.delegate task:task didHitCacheWithResponse:response];
+                }
+            }
+        }
     });
 }
 
-- (SFURLError *)shouldSendTask:(SFURLTask *)task request:(SFURLRequest *)request {
-    if ([task.filter respondsToSelector:@selector(task:shouldSendWithRequest:)]) {
-        SFURLError *error = [task.filter task:task shouldSendWithRequest:nil];
-        if (error) {
-            return error;
-        }
+- (SFURLError *)shouldCompleteTask:(SFURLTask *)task response:(SFURLResponse *)response {
+    SFURLError *error = nil;
+    if (task.filter.shouldComplete) {
+        error = task.filter.shouldComplete(task,response);
     }
-    //1.检查重复
-    BOOL shouldSendWhileFrequently = (task.filter)?task.filter.shouldSendWhileFrequently:NO;
-    if (self.allTasks[task.hashKey] && !shouldSendWhileFrequently) {
-        return [SFURLError errorWithCode:SFURLErrorFrequently message:@"[Frequently]"];
+    else if ([task.filter respondsToSelector:@selector(task:shouldCompleteResponse:)]) {
+        error = [task.filter task:task shouldCompleteResponse:response];
     }
-    //2.检查缓存
-    BOOL shouldSendWhileFindCache = (task.filter)?task.filter.shouldSendWhileFindCache:YES;
-    if (task.cache && [[SFURLTaskCache sharedInstance] containResponseObjectWithTask:task] && !shouldSendWhileFindCache) {
-        return [SFURLError errorWithCode:SFURLErrorUseCache message:@"[UseCache]"];
-    }
-    //3.检查网络
-    BOOL shouldSendWhileNetworkNotReachable = (task.filter)?task.filter.shouldSendWhileNetworkNotReachable:NO;
-    if ([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable && !shouldSendWhileNetworkNotReachable) {
-        return [SFURLError errorWithCode:SFURLErrorNotConnectedToInternet message:@"[NotConnectedToInternet]"];
-    }
-    return nil;
+    return error;
 }
 
-- (BOOL)shouldCompleteTask:(SFURLTask *)task response:(SFURLResponse *)response {
-    BOOL shouldComplete = YES;
-    if ([task.filter respondsToSelector:@selector(task:shouldCompleteWithResponse:)]) {
-        shouldComplete = [task.filter task:task shouldCompleteWithResponse:response];
-    }
-    return shouldComplete;
-}
-
-- (void)completeTask:(SFURLTask *)task dataTask:(NSURLSessionDataTask *)dataTask responseObject:(id)responseObject error:(NSError *)error {
+- (void)completeRequestWithTask:(SFURLTask *)task dataTask:(NSURLSessionDataTask *)dataTask responseObject:(id)responseObject error:(NSError *)error completion:(void(^)(SFURLResponse *response))completion {
     dispatch_async(dispatch_get_main_queue(), ^{
-        SFURLError *URLError = error?[SFURLError errorWithError:error]:nil;
         SFURLResponse *response = [self responseWithURLSessionTask:dataTask
                                                     responseObject:responseObject
-                                                             error:URLError
+                                                             error:error?[SFURLError errorWithError:error]:nil
                                                            forTask:task];
         if (response.success) {
             if (task.cache) {
                 [[SFURLTaskCache sharedInstance] setResponseObject:responseObject forTask:task];
             }
-            if ([task.page respondsToSelector:@selector(updateWithResponseObject:)]) {
-                [task.page updateWithResponseObject:responseObject];
-            }
         }
-        [self didCompleteTask:task response:response];
+        if (completion) {
+            completion(response);
+        }
+        [self completeTask:task response:response];
     });
 }
 
-- (void)didCompleteTask:(SFURLTask *)task response:(SFURLResponse *)response {
+- (void)completeTask:(SFURLTask *)task response:(SFURLResponse *)response {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self shouldCompleteTask:task response:response]) {
+        SFURLError *error = [self shouldCompleteTask:task response:response];
+        if (!error) {
+            if (task.complete) {
+                task.complete(task, response);
+            }
             if ([task.delegate respondsToSelector:@selector(task:didCompleteWithResponse:)]) {
                 [task.delegate task:task didCompleteWithResponse:response];
             }
-            if (task.completeBlock) {
-                task.completeBlock(task, response);
-            }
         }
-        if ([task.interaction respondsToSelector:@selector(task:didCompleteWithResponse:)]) {
-            [task.interaction task:task didCompleteWithResponse:response];
+        if ([task.interaction.delegate respondsToSelector:@selector(task:endInteractionWithResponse:)]) {
+            [task.interaction.delegate task:task endInteractionWithResponse:response];
         }
-        if ([self.httpTasks.allKeys containsObject:task.identifier]) {
-            self.httpTasks[task.identifier] = nil;
-        }
-        self.allTasks[task.identifier] = nil;
-        task.debugLog.response = response;
-        task.debugLog.completeDate = [NSDate date];
-        [[SFURLTaskLogger manager] printHTTPTaskLog:task.debugLog];
+        [self printLogWithTask:task request:task.request response:response];
+        [self clearTask:task];
     });
+}
+
+- (void)printLogWithTask:(SFURLTask *)task request:(SFURLRequest *)request response:(SFURLResponse *)response {
+    if ([task.debugDelegate respondsToSelector:@selector(task:printLogWithRequest:andResponse:)]) {
+        [task.debugDelegate task:task printLogWithRequest:request andResponse:response];
+    }
+}
+
+- (void)clearTask:(SFURLTask *)task {
+    task.request = nil;
+    self.allTasks[task.identifier] = nil;
+    if ([self.httpTasks.allKeys containsObject:task.identifier]) {
+        self.httpTasks[task.identifier] = nil;
+    }
 }
 
 - (SFURLRequest *)requestWithTask:(SFURLTask *)task {
     SFURLRequest *request = [SFURLRequest new];
-    NSString *taskURL = task.taskURL;
-    if (taskURL == nil) {
-        NSString *baseURL = task.baseURL;
-#ifdef DEBUG
-        if (task.debugBaseURL) {
-            baseURL = task.debugBaseURL;
+    //URL
+    [request setURL:({
+        NSString *taskURL = task.taskURL;
+        if (taskURL == nil) {
+            NSString *pathURL = task.pathURL;
+            pathURL = ([pathURL hasPrefix:@"/"])?[pathURL substringFromIndex:1]:pathURL;
+            pathURL = pathURL?:@"";
+            taskURL = [[NSURL URLWithString:pathURL
+                              relativeToURL:[NSURL URLWithString:task.baseURL]] absoluteString];
         }
-#endif
-        NSString *pathURL = task.pathURL;
-        pathURL = ([pathURL hasPrefix:@"/"])?[pathURL substringFromIndex:1]:pathURL;
-        pathURL = pathURL?:@"";
-        taskURL = [[NSURL URLWithString:pathURL
-                          relativeToURL:[NSURL URLWithString:baseURL]] absoluteString];
-    }
-    NSMutableDictionary *parameters = [NSMutableDictionary new];
-    [parameters addEntriesFromDictionary:task.builtinParameters];
-    [parameters addEntriesFromDictionary:task.parameters];
-    [parameters addEntriesFromDictionary:[task.page parametersForRequest]];
-    
-    [request setURL:taskURL.copy];
-    [request setParameters:parameters.copy];
-    
+        taskURL;
+    })];
     //HTTP
     if ([task isKindOfClass:[SFHTTPTask class]]) {
         SFHTTPTask *httpTask = (SFHTTPTask *)task;
-        NSMutableDictionary *HTTPHeaders = [NSMutableDictionary new];
-        [HTTPHeaders addEntriesFromDictionary:httpTask.builtinHTTPRequestHeaders];
-        [HTTPHeaders addEntriesFromDictionary:httpTask.HTTPRequestHeaders];
         [request setHTTPMethod:httpTask.method];
-        [request setHTTPHeaders:HTTPHeaders];
+        [request setHTTPHeaders:SFHTTPRequestHeaders(httpTask)];
+        [request setParameters:SFHTTPRequestParameters(httpTask)];
         [request setRequestSerializer:({
             AFHTTPRequestSerializer *serializer = nil;
             switch (httpTask.requestSerializerType) {
                 case SFURLSerializerTypeHTTP:
+                case SFURLSerializerTypeXML:
                     serializer = [AFHTTPRequestSerializer serializer];break;
                 case SFURLSerializerTypeJSON:
                     serializer = [AFJSONRequestSerializer serializer];break;
                 case SFURLSerializerTypePropertyList:serializer = [AFPropertyListRequestSerializer serializer];break;
-                default:break;
             }
-            [HTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [request.HTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                 [serializer setValue:obj forHTTPHeaderField:key];
             }];
             serializer.timeoutInterval = httpTask.timeoutInterval;
@@ -266,6 +271,7 @@
             AFHTTPResponseSerializer *serializer = nil;
             switch (httpTask.responseSerializerType) {
                 case SFURLSerializerTypeHTTP:
+                case SFURLSerializerTypeXML:
                     serializer = [AFHTTPResponseSerializer serializer];break;
                 case SFURLSerializerTypePropertyList:
                     serializer = [AFPropertyListResponseSerializer serializer];break;
@@ -274,8 +280,6 @@
                     JSONResponseSerializer.removesKeysWithNullValues = YES;
                     serializer = JSONResponseSerializer;
                 }
-                    break;
-                default:
                     break;
             }
             serializer.acceptableContentTypes = httpTask.acceptableContentTypes;
@@ -298,29 +302,44 @@
                                                              responseObject:responseObject
                                                                       error:error];
     if (response.success) {
-        if ([task.responseSerializer respondsToSelector:@selector(task:statusWithResponseObject:)]) {
-            response.status = [task.responseSerializer task:task
-                                   statusWithResponseObject:responseObject];
+        if (task.responseSerializer.statusFromResponseObject) {
+            response.status = task.responseSerializer.statusFromResponseObject(responseObject);
         }
-        if ([task.responseSerializer respondsToSelector:@selector(task:successWithResponseObject:)]) {
+        else if ([task.responseSerializer respondsToSelector:@selector(task:statusWithResponseObject:)]) {
+            response.status = [task.responseSerializer task:task statusWithResponseObject:responseObject];
+        }
+        if (task.responseSerializer.successFromResponseObject) {
+            response.success = task.responseSerializer.successFromResponseObject(responseObject);
+        }
+        else if ([task.responseSerializer respondsToSelector:@selector(task:successWithResponseObject:)]) {
             response.success = [task.responseSerializer task:task
                                    successWithResponseObject:responseObject];
         }
+        if (response.success) {
+            if ([task isKindOfClass:[SFHTTPTask class]]) {
+                SFHTTPTask *httpTask = (SFHTTPTask *)task;
+                if ([httpTask.page respondsToSelector:@selector(updateWithResponseObject:)]) {
+                    [httpTask.page updateWithResponseObject:responseObject];
+                }
+            }
+        }
     }
-    if ([task.responseSerializer respondsToSelector:@selector(task:messageWithResponseObject:error:)]) {
+    if (task.responseSerializer.messageFromResponseObject) {
+        response.message = task.responseSerializer.messageFromResponseObject(responseObject,error);
+    }
+    else if ([task.responseSerializer respondsToSelector:@selector(task:messageWithResponseObject:error:)]) {
         response.message = [task.responseSerializer task:task
                                messageWithResponseObject:responseObject
                                                    error:error];
     }
-    id reformerObject = responseObject;
-    if ([task.responseSerializer.reformer respondsToSelector:@selector(task:reformerObject:forResponse:)]) {
-        reformerObject = [task.responseSerializer.reformer task:task reformerObject:reformerObject forResponse:response];
-    }
-    if ([task.responseSerializer.reformerDelegate respondsToSelector:@selector(task:reformerObject:forResponse:)]) {
-        reformerObject = [task.responseSerializer.reformerDelegate task:task reformerObject:reformerObject forResponse:response];
-    }
-    response.reformerObject = reformerObject;
     return response;
+}
+
+- (dispatch_queue_t)taskQueue {
+    return _taskQueue?:({
+        _taskQueue = dispatch_queue_create("com.SFNetworingManager.taskQueue", NULL);
+        _taskQueue;
+    });
 }
 
 - (NSMutableDictionary<NSString *,SFURLTask *> *)allTasks {
@@ -351,10 +370,24 @@
     });
 }
 
+- (dispatch_queue_t)taskGroupQueue {
+    return _taskGroupQueue?:({
+        _taskGroupQueue = dispatch_queue_create("com.SFNetworingManager.taskGroupQueue", NULL);
+        _taskGroupQueue;
+    });
+}
+
+- (NSMutableArray<SFURLTaskGroup *> *)allTaskGroups {
+    return _allTaskGroups?:({
+        _allTaskGroups = [NSMutableArray new];
+        _allTaskGroups;
+    });
+}
+
 @end
 
 #pragma mark - TaskGroup
-@implementation SFURLTaskManger(SFAddTaskGroup)
+@implementation SFNetworingManager(SFAddTaskGroup)
 
 - (void)sendTaskGroup:(SFURLTaskGroup *)taskGroup {
     dispatch_group_t group_t = dispatch_group_create();
@@ -378,20 +411,6 @@
         });
     });
     [self.allTaskGroups addObject:taskGroup];
-}
-
-- (NSMutableArray<SFURLTaskGroup *> *)allTaskGroups {
-    return _allTaskGroups?:({
-        _allTaskGroups = [NSMutableArray new];
-        _allTaskGroups;
-    });
-}
-
-- (dispatch_queue_t)taskGroupQueue {
-    return _taskGroupQueue?:({
-        _taskGroupQueue = dispatch_queue_create("com.SFURLTaskManager.taskGroupQueue", NULL);
-        _taskGroupQueue;
-    });
 }
 
 @end

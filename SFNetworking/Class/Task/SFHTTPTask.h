@@ -7,6 +7,30 @@
 //
 #import "SFURLTask.h"
 
+@class SFHTTPTask;
+typedef NS_ENUM(NSInteger,SFHTTPMethod) {
+    SFHTTPMethodGET,
+    SFHTTPMethodPOST
+};
+FOUNDATION_EXTERN NSString *SFHTTPMethodText(SFHTTPMethod method);
+FOUNDATION_EXTERN NSDictionary *SFHTTPRequestParameters(SFHTTPTask *task);
+FOUNDATION_EXTERN NSDictionary *SFHTTPRequestHeaders(SFHTTPTask *task);
+
+#pragma mark - 拼接数据
+@protocol SFHTTPFormDateProtocol <NSObject>
+@property (nonatomic,strong) NSData *data;
+@property (nonatomic,copy) NSString *name;
+@property (nonatomic,copy) NSString *fileName;
+@property (nonatomic,copy) NSString *mimeType;
+@end
+
+#pragma mark - 分页请求
+typedef NS_ENUM(NSInteger,SFURLTaskPageOperation) {
+    SFURLTaskPageOperationFirstLoad = 0,
+    SFURLTaskPageOperationReload,
+    SFURLTaskPageOperationLoadMore
+};
+
 @protocol SFURLTaskPageProtocol<NSObject>
 @optional
 @property (nonatomic,assign) SFURLTaskPageOperation lastLoadOperation;
@@ -25,40 +49,12 @@
 - (NSDictionary *)parametersForRequest;
 @end
 
-@protocol SFHTTPFormDateProtocol <NSObject>
-@property (nonatomic,strong) NSData *data;
-@property (nonatomic,copy) NSString *name;
-@property (nonatomic,copy) NSString *fileName;
-@property (nonatomic,copy) NSString *mimeType;
-@end
-
-typedef NS_ENUM(NSInteger,SFHTTPMethod) {
-    SFHTTPMethodGET,
-    SFHTTPMethodPOST
-};
-
-typedef NS_ENUM(NSInteger,SFURLTaskPageOperation) {
-    SFURLTaskPageOperationFirstLoad = 0,
-    SFURLTaskPageOperationReload,
-    SFURLTaskPageOperationLoadMore
-};
-
-FOUNDATION_EXTERN NSString *SFHTTPMethodText(SFHTTPMethod method);
-
 @interface SFHTTPTask : SFURLTask
-
 @property (nonatomic,assign) SFHTTPMethod method;
-
-@property (nonatomic,strong) id<SFURLTaskPageProtocol> page;
-
 @property (nonatomic,assign) SFURLSerializerType requestSerializerType;
-
-@property (nonatomic,copy) NSDictionary *builtinHTTPRequestHeaders;
-
+@property (nonatomic,copy) NSDictionary *parameters;
 @property (nonatomic,copy) NSDictionary *HTTPRequestHeaders;
-
 @property (nonatomic,copy) NSSet<NSString *> *acceptableContentTypes;
-
-@property (nonatomic,strong) id<SFHTTPFormDateProtocol> formData;
-
+@property (nonatomic,copy) NSArray<id<SFHTTPFormDateProtocol>> *formDatas;
+@property (nonatomic,strong) id<SFURLTaskPageProtocol> page;
 @end

@@ -7,29 +7,27 @@
 //
 
 #import "SFURLTaskManager.h"
+#import "SFNetworingManager.h"
 
 @interface SFURLTaskManager()
 @property (nonatomic,strong) NSMapTable *requestingTasks;
 @property (nonatomic,strong) NSMutableDictionary *holdTasks;
-@property (nonatomic,strong) dispatch_queue_t taskQueue;
 @end
 
 @implementation SFURLTaskManager
 
+#pragma mark - life
 - (void)dealloc {
     [self cancelAllTasks];
 }
 
 #pragma mark - public
 - (void)sendTask:(SFURLTask *)task {
-    dispatch_async(self.taskQueue, ^{
-        [[SFURLTaskManger manager] sendTask:task];
-    });
-    [self.requestingTasks setObject:task
-                             forKey:task.hashKey];
+    [self.requestingTasks setObject:task forKey:task.identifier];
+    [[SFNetworingManager manager] sendTask:task];
 }
 
-- (void)reloadTask:(SFURLTask *)task {
+- (void)reloadTask:(SFHTTPTask *)task {
     if (task.page) {
         [task.page reload];
         [self sendTask:task];
@@ -39,7 +37,7 @@
     }
 }
 
-- (void)loadMoreTask:(SFURLTask *)task {
+- (void)loadMoreTask:(SFHTTPTask *)task {
     if (task.page) {
         [task.page loadNext];
         [self sendTask:task];
@@ -51,18 +49,15 @@
 
 - (void)sendTaskGroup:(SFURLTaskGroup *)taskGroup {
     [taskGroup.tasks enumerateObjectsUsingBlock:^(SFURLTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (task.page) {
-            [task.page reset];
-        }
         [self.requestingTasks setObject:task
-                                 forKey:task.hashKey];
+                                 forKey:task.identifier];
     }];
-    [[SFURLTaskManger manager] sendTaskGroup:taskGroup];
+    [[SFNetworingManager manager] sendTaskGroup:taskGroup];
 }
 
 - (void)cancelAllTasks {
-    [self.requestingTasks.objectEnumerator.allObjects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
+    [self.requestingTasks.objectEnumerator.allObjects enumerateObjectsUsingBlock:^(SFURLTask *task, NSUInteger idx, BOOL * _Nonnull stop) {
+        [[SFNetworingManager manager] cancelTask:task];
     }];
 }
 
@@ -76,7 +71,7 @@
 }
 
 #pragma mark - set/get
-- (NSInteger)requestingsCount {
+- (NSInteger)requestingTasksNumber {
     return self.requestingTasks.count;
 }
 
@@ -91,13 +86,6 @@
     return _holdTasks?:({
         _holdTasks = [NSMutableDictionary new];
         _holdTasks;
-    });
-}
-
-- (dispatch_queue_t)taskQueue {
-    return _taskQueue?:({
-        _taskQueue = dispatch_queue_create("com.SFNetworingManager.queue", NULL);
-        _taskQueue;
     });
 }
 

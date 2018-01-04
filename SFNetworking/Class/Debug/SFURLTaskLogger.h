@@ -6,9 +6,7 @@
 //  Copyright © 2017年 YunSL. All rights reserved.
 //
 
-#import "SFURLTaskLog.h"
-
+#import "SFURLTask.h"
 @interface SFURLTaskLogger : NSObject
 + (instancetype)manager;
-- (void)printHTTPTaskLog:(SFURLTaskLog *)log;
 @end

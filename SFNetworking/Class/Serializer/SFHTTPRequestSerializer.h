@@ -8,5 +8,5 @@
 
 #import "SFURLTask.h"
 
-@interface SFHTTPRequestSerializer : NSObject;
+@interface SFHTTPRequestSerializer : NSObject
 @end

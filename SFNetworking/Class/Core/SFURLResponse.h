@@ -10,7 +10,6 @@
 
 @interface SFURLResponse : NSObject
 @property (nonatomic,assign) BOOL success;
-@property (nonatomic,assign) BOOL fromCache;
 @property (nonatomic,assign) SFURLErrorCode code;
 @property (nonatomic,assign) NSInteger status;
 @property (nonatomic,copy) NSString *message;

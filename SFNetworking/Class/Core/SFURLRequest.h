@@ -14,6 +14,8 @@
 @property (nonatomic,copy) NSDictionary *parameters;
 @property (nonatomic,strong) id<AFURLRequestSerialization> requestSerializer;
 @property (nonatomic,strong) id<AFURLResponseSerialization> responseSerializer;
+@property (nonatomic,strong) NSDate *sendDate;
+@property (nonatomic,strong) NSDate *completeDate;
 @end
 
 @interface SFURLRequest(SFAddHTTPTask)

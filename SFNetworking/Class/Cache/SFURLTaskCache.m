@@ -29,19 +29,19 @@
 }
 
 - (void)clearResponseObject:(id)responseObject forTask:(SFURLTask *)task {
-    [self.taskCache removeObjectForKey:task.hashKey];
+    [self.taskCache removeObjectForKey:task.identifier];
 }
 
 - (void)setResponseObject:(id)responseObject forTask:(SFURLTask *)task {
-    [self.taskCache setObject:responseObject forKey:task.hashKey];
+    [self.taskCache setObject:responseObject forKey:task.identifier];
 }
 
 - (id)getResponseObjectWithTask:(SFURLTask *)task {
-    return [self.taskCache objectForKey:task.hashKey];
+    return [self.taskCache objectForKey:task.identifier];
 }
 
 - (BOOL)containResponseObjectWithTask:(SFURLTask *)task {
-    return [self.taskCache containsObjectForKey:task.hashKey];
+    return [self.taskCache containsObjectForKey:task.identifier];
 }
 
 - (YYCache *)taskCache {

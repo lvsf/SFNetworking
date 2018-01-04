@@ -6,7 +6,7 @@
 //  Copyright © 2017年 YunSL. All rights reserved.
 //
 
-#import "SFURLTask.h"
+#import "SFHTTPTask.h"
 
 typedef NS_ENUM(NSInteger,SFURLTaskPageType) {
     SFURLTaskPageTypeIndex = 0,

@@ -7,24 +7,19 @@
 //
 
 #import "SFURLTask.h"
+#import "SFHTTPTask.h"
 #import "SFURLTaskGroup.h"
-#import "SFURLTaskConfiguration.h"
 
 @interface SFURLTaskManager : NSObject
 
-@property (nonatomic,assign) NSInteger requestingsCount;
+@property (nonatomic,assign,readonly) NSInteger requestingTasksNumber;
 
-@property (nonatomic,strong) SFURLTaskConfiguration *configuration;
-
-+ (void)setupTaskConfiguration:(void(^)(SFURLTaskConfiguration *config))configuration
-                        forKey:(NSString *)key;
-- (void)sendTask:(SFURLTask *)task configurationKey:(NSString *)key;
 - (void)sendTask:(SFURLTask *)task;
 - (void)sendTaskGroup:(SFURLTaskGroup *)taskGroup;
 - (void)cancelAllTasks;
 
-- (void)reloadTask:(SFURLTask *)task;
-- (void)loadMoreTask:(SFURLTask *)task;
+- (void)reloadTask:(SFHTTPTask *)task;
+- (void)loadMoreTask:(SFHTTPTask *)task;
 
 - (SFURLTaskManager *(^)(SFURLTask *))sendTask;
 

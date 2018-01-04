@@ -12,20 +12,10 @@
 
 - (NSString *)identifier {
     if (self.taskURL) {
-        return [NSString stringWithFormat:@"%@?%@&%@",
-                self.taskURL,
-                self.parameters,
-                self.builtinParameters];
+        return [NSString stringWithFormat:@"%@",self.taskURL];
     } else {
         NSString *baseURL = self.baseURL;
-#ifdef DEBUG
-        baseURL = self.debugBaseURL;
-#endif
-        return [NSString stringWithFormat:@"%@/%@?%@&%@",
-                baseURL,
-                self.pathURL,
-                self.parameters,
-                self.builtinParameters];
+        return [NSString stringWithFormat:@"%@/%@",baseURL,self.pathURL];
     }
 }
 

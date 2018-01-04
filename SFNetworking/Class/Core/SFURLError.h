@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger,SFURLErrorCustomCode) {
+    SFURLErrorCustomCodeFrequently         = -1,
+    SFURLErrorCustomCodeNetworkNotReachable = -2
+};
+
 typedef NS_ENUM(NSInteger,SFURLErrorCode) {
     SFURLErrorUnknown =             -1,
+    SFURLErrorCustom =              -2,
     SFURLErrorCancelled =             -999,
     SFURLErrorBadURL =                 -1000,
     SFURLErrorTimedOut =             -1001,
@@ -67,7 +73,9 @@ typedef NS_ENUM(NSInteger,SFURLErrorCode) {
 
 @interface SFURLError : NSObject
 @property (nonatomic,assign) SFURLErrorCode code;
+@property (nonatomic,assign) NSInteger customCode;
 @property (nonatomic,copy) NSString *message;
 + (instancetype)errorWithCode:(SFURLErrorCode)code message:(NSString *)message;
++ (instancetype)errorWithCustomCode:(NSInteger)code message:(NSString *)message;
 + (instancetype)errorWithError:(NSError *)error;
 @end

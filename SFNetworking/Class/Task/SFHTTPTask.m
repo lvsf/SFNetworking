@@ -12,8 +12,32 @@ NSString *SFHTTPMethodText(SFHTTPMethod method) {
     switch (method) {
         case SFHTTPMethodGET:return @"GET";break;
         case SFHTTPMethodPOST:return @"POST";
-        default:return nil;break;
     }
+};
+
+NSDictionary *SFHTTPRequestParameters(SFHTTPTask *task) {
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    [parameters addEntriesFromDictionary:task.parameters];
+    [parameters addEntriesFromDictionary:[task.page parametersForRequest]];
+    if (task.requestSerializer.appendBuiltinParameters) {
+        [parameters addEntriesFromDictionary:task.requestSerializer.appendBuiltinParameters(task)];
+    }
+    else if ([task.requestSerializer respondsToSelector:@selector(appendBuiltinParameters)]) {
+        [parameters addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinParametersForRequest:task]];
+    }
+    return parameters;
+};
+
+NSDictionary *SFHTTPRequestHeaders(SFHTTPTask *task) {
+    NSMutableDictionary *HTTPHeaders = [NSMutableDictionary new];
+    [HTTPHeaders addEntriesFromDictionary:task.HTTPRequestHeaders];
+    if (task.requestSerializer.appendBuiltinHTTPHeaders) {
+        [HTTPHeaders addEntriesFromDictionary:task.requestSerializer.appendBuiltinHTTPHeaders(task)];
+    }
+    else if ([task.requestSerializer respondsToSelector:@selector(taskAppendBuiltinHTTPHeadersForRequest:)]) {
+        [HTTPHeaders addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinParametersForRequest:task]];
+    }
+    return HTTPHeaders;
 };
 
 @implementation SFHTTPTask
@@ -37,25 +61,18 @@ NSString *SFHTTPMethodText(SFHTTPMethod method) {
 
 - (NSString *)identifier {
     if (self.taskURL) {
-        return [NSString stringWithFormat:@"%@?%@&%@&%@&%@&%@",
+        return [NSString stringWithFormat:@"%@?%@&%@&%@",
                 self.taskURL,
-                self.parameters,
-                self.builtinParameters,
-                self.HTTPRequestHeaders,
-                self.builtinHTTPRequestHeaders,
+                SFHTTPRequestParameters(self),
+                SFHTTPRequestHeaders(self),
                 @(self.method)];
     } else {
         NSString *baseURL = self.baseURL;
-#ifdef DEBUG
-        baseURL = self.debugBaseURL;
-#endif
-        return [NSString stringWithFormat:@"%@/%@?%@&%@&%@&%@&%@",
+        return [NSString stringWithFormat:@"%@/%@?%@&%@&%@",
                 baseURL,
                 self.pathURL,
-                self.parameters,
-                self.builtinParameters,
-                self.HTTPRequestHeaders,
-                self.builtinHTTPRequestHeaders,
+                SFHTTPRequestParameters(self),
+                SFHTTPRequestHeaders(self),
                 @(self.method)];
     }
 }
