@@ -13,7 +13,6 @@
 @implementation SFHTTPTask (ZSLYAdd)
 
 + (instancetype)zsly_task {
-    NSURLSessionTask
     SFHTTPTask *task = [self new];
     ZSHTTPTaskConfiguration *configuration = [ZSHTTPTaskConfiguration new];
     task.requestSerializerType = SFURLSerializerTypeJSON;

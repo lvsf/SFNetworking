@@ -36,7 +36,7 @@
     return nil;
 }
 
-- (NSDictionary *)taskAppendBuiltinParametersForRequest:(SFURLTask *)task {
+- (NSDictionary *)taskAppendBuiltinParametersForRequest:(SFURLTask *)task andCurrentParameters:(NSDictionary *)currentParameters {
     NSMutableDictionary *builtinParameters = [NSMutableDictionary new];
     return builtinParameters.copy;
 }

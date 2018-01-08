@@ -9,7 +9,7 @@
 #import "SFNetworingManager.h"
 #import "SFURLTaskCache.h"
 #import "SFURLTaskLogger.h"
-#import <AFNetworking.h>
+#import "AFNetworking.h"
 #import <objc/runtime.h>
 
 @interface SFNetworingManager()
