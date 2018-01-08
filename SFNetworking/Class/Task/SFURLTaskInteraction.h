@@ -1,12 +1,12 @@
 //
 //  SFURLTaskInteraction.h
-//  SFNetworking
+//  ZSLYApp
 //
-//  Created by YunSL on 2018/1/2.
-//  Copyright © 2018年 YunSL. All rights reserved.
+//  Created by YunSL on 2018/1/4.
+//  Copyright © 2018年 ZSLY. All rights reserved.
 //
 
 #import "SFURLTask.h"
 
-@interface SFURLTaskInteraction : NSObject<SFURLTaskInteractionProtocol,SFURLTaskInteractionDelegate>
+@interface SFURLTaskInteraction : NSObject<SFURLTaskInteractionProtocol>
 @end

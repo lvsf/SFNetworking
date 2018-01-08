@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1731DF811FFB17A400550F1F /* SFURLTaskInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1731DF801FFB17A400550F1F /* SFURLTaskInteraction.m */; };
-		174C76B61FFB5FB20037DC8F /* SFURLTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 174C76B51FFB5FB20037DC8F /* SFURLTaskConfiguration.m */; };
 		17A287371FFB6AD1009A2CB2 /* SFHTTPTask+ZSLYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A287361FFB6AD1009A2CB2 /* SFHTTPTask+ZSLYAdd.m */; };
 		17AC68DB1FDE27ED0042160E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68DA1FDE27ED0042160E /* AppDelegate.m */; };
 		17AC68DE1FDE27ED0042160E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68DD1FDE27ED0042160E /* ViewController.m */; };
@@ -16,8 +15,6 @@
 		17AC68E31FDE27ED0042160E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17AC68E21FDE27ED0042160E /* Assets.xcassets */; };
 		17AC68E61FDE27ED0042160E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AC68E41FDE27ED0042160E /* LaunchScreen.storyboard */; };
 		17AC68E91FDE27EE0042160E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68E81FDE27EE0042160E /* main.m */; };
-		17AC69181FDE29730042160E /* SFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */; };
-		17AC69191FDE29730042160E /* SFHTTPResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */; };
 		17AC691A1FDE29730042160E /* SFURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F61FDE29730042160E /* SFURLResponse.m */; };
 		17AC691B1FDE29730042160E /* SFURLTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68F71FDE29730042160E /* SFURLTaskManager.m */; };
 		17AC691C1FDE29730042160E /* SFURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC68FA1FDE29730042160E /* SFURLRequest.m */; };
@@ -33,15 +30,12 @@
 		17AC69261FDE29730042160E /* SFURLTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC690F1FDE29730042160E /* SFURLTaskGroup.m */; };
 		17AC69281FDE29730042160E /* SFURLTaskLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC69171FDE29730042160E /* SFURLTaskLogger.m */; };
 		17BE26431FFB6C3B0018EE50 /* ZSHTTPTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 17BE26421FFB6C3B0018EE50 /* ZSHTTPTaskConfiguration.m */; };
-		17FA96DE1FE216E000C250C9 /* SFURLTaskFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */; };
 		D069DECBE0221EFBF6472552 /* libPods-SFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62343E662728F0BB05106442 /* libPods-SFNetworking.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1731DF7F1FFB17A400550F1F /* SFURLTaskInteraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFURLTaskInteraction.h; sourceTree = "<group>"; };
 		1731DF801FFB17A400550F1F /* SFURLTaskInteraction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskInteraction.m; sourceTree = "<group>"; };
-		174C76B41FFB5FB20037DC8F /* SFURLTaskConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFURLTaskConfiguration.h; sourceTree = "<group>"; };
-		174C76B51FFB5FB20037DC8F /* SFURLTaskConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskConfiguration.m; sourceTree = "<group>"; };
 		17A287351FFB6AD1009A2CB2 /* SFHTTPTask+ZSLYAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SFHTTPTask+ZSLYAdd.h"; sourceTree = "<group>"; };
 		17A287361FFB6AD1009A2CB2 /* SFHTTPTask+ZSLYAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SFHTTPTask+ZSLYAdd.m"; sourceTree = "<group>"; };
 		17AC68D61FDE27ED0042160E /* SFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,10 +48,6 @@
 		17AC68E51FDE27ED0042160E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17AC68E71FDE27EE0042160E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17AC68E81FDE27EE0042160E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHTTPRequestSerializer.m; sourceTree = "<group>"; };
-		17AC68F21FDE29730042160E /* SFHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHTTPResponseSerializer.h; sourceTree = "<group>"; };
-		17AC68F31FDE29730042160E /* SFHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHTTPRequestSerializer.h; sourceTree = "<group>"; };
-		17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHTTPResponseSerializer.m; sourceTree = "<group>"; };
 		17AC68F61FDE29730042160E /* SFURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLResponse.m; sourceTree = "<group>"; };
 		17AC68F71FDE29730042160E /* SFURLTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskManager.m; sourceTree = "<group>"; };
 		17AC68F81FDE29730042160E /* SFURLTaskPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFURLTaskPage.h; sourceTree = "<group>"; };
@@ -88,8 +78,6 @@
 		17AC69171FDE29730042160E /* SFURLTaskLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskLogger.m; sourceTree = "<group>"; };
 		17BE26411FFB6C3B0018EE50 /* ZSHTTPTaskConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSHTTPTaskConfiguration.h; sourceTree = "<group>"; };
 		17BE26421FFB6C3B0018EE50 /* ZSHTTPTaskConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSHTTPTaskConfiguration.m; sourceTree = "<group>"; };
-		17FA96DC1FE216E000C250C9 /* SFURLTaskFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFURLTaskFilter.h; sourceTree = "<group>"; };
-		17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFURLTaskFilter.m; sourceTree = "<group>"; };
 		1B499CA87D2D08997AA29B7A /* Pods-SFNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SFNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking.release.xcconfig"; sourceTree = "<group>"; };
 		62343E662728F0BB05106442 /* libPods-SFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SFNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FD067AC9BF54D6E0193EC8E /* Pods-SFNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SFNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SFNetworking/Pods-SFNetworking.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,22 +144,10 @@
 			children = (
 				17AC68F51FDE29730042160E /* Core */,
 				17AC69071FDE29730042160E /* Task */,
-				17AC68F01FDE29730042160E /* Serializer */,
 				17AC69031FDE29730042160E /* Cache */,
 				17AC69131FDE29730042160E /* Debug */,
 			);
 			path = Class;
-			sourceTree = "<group>";
-		};
-		17AC68F01FDE29730042160E /* Serializer */ = {
-			isa = PBXGroup;
-			children = (
-				17AC68F31FDE29730042160E /* SFHTTPRequestSerializer.h */,
-				17AC68F11FDE29730042160E /* SFHTTPRequestSerializer.m */,
-				17AC68F21FDE29730042160E /* SFHTTPResponseSerializer.h */,
-				17AC68F41FDE29730042160E /* SFHTTPResponseSerializer.m */,
-			);
-			path = Serializer;
 			sourceTree = "<group>";
 		};
 		17AC68F51FDE29730042160E /* Core */ = {
@@ -213,16 +189,12 @@
 				17AC69091FDE29730042160E /* SFHTTPTask.m */,
 				17AC69111FDE29730042160E /* SFUploadTask.h */,
 				17AC690B1FDE29730042160E /* SFUploadTask.m */,
-				17AC690C1FDE29730042160E /* SFDownloadTask.m */,
 				17AC69101FDE29730042160E /* SFDownloadTask.h */,
+				17AC690C1FDE29730042160E /* SFDownloadTask.m */,
 				17AC690A1FDE29730042160E /* SFURLTaskGroup.h */,
 				17AC690F1FDE29730042160E /* SFURLTaskGroup.m */,
-				17FA96DC1FE216E000C250C9 /* SFURLTaskFilter.h */,
-				17FA96DD1FE216E000C250C9 /* SFURLTaskFilter.m */,
 				1731DF7F1FFB17A400550F1F /* SFURLTaskInteraction.h */,
 				1731DF801FFB17A400550F1F /* SFURLTaskInteraction.m */,
-				174C76B41FFB5FB20037DC8F /* SFURLTaskConfiguration.h */,
-				174C76B51FFB5FB20037DC8F /* SFURLTaskConfiguration.m */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -382,13 +354,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				17AC69251FDE29730042160E /* SFDownloadTask.m in Sources */,
-				17AC69181FDE29730042160E /* SFHTTPRequestSerializer.m in Sources */,
 				17AC691D1FDE29730042160E /* SFNetworingManager.m in Sources */,
 				17AC691A1FDE29730042160E /* SFURLResponse.m in Sources */,
 				17AC69211FDE29730042160E /* UIResponder+SFAddNetworking.m in Sources */,
 				17AC691F1FDE29730042160E /* SFURLTaskPage.m in Sources */,
 				17BE26431FFB6C3B0018EE50 /* ZSHTTPTaskConfiguration.m in Sources */,
-				17AC69191FDE29730042160E /* SFHTTPResponseSerializer.m in Sources */,
 				17AC691B1FDE29730042160E /* SFURLTaskManager.m in Sources */,
 				17AC69221FDE29730042160E /* SFURLTask.m in Sources */,
 				17A287371FFB6AD1009A2CB2 /* SFHTTPTask+ZSLYAdd.m in Sources */,
@@ -399,12 +369,10 @@
 				17AC68DB1FDE27ED0042160E /* AppDelegate.m in Sources */,
 				17AC69201FDE29730042160E /* SFURLTaskCache.m in Sources */,
 				17AC69261FDE29730042160E /* SFURLTaskGroup.m in Sources */,
-				174C76B61FFB5FB20037DC8F /* SFURLTaskConfiguration.m in Sources */,
 				17AC691E1FDE29730042160E /* SFURLError.m in Sources */,
 				1731DF811FFB17A400550F1F /* SFURLTaskInteraction.m in Sources */,
 				17AC69231FDE29730042160E /* SFHTTPTask.m in Sources */,
 				17AC69281FDE29730042160E /* SFURLTaskLogger.m in Sources */,
-				17FA96DE1FE216E000C250C9 /* SFURLTaskFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,8 +7,15 @@
 //
 
 #import "SFURLTask.h"
+#import "SFURLTaskInteraction.h"
 
 @implementation SFURLTask
+
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"task:%@ dealloc",self);
+#endif
+}
 
 - (NSString *)identifier {
     if (self.taskURL) {
@@ -17,6 +24,13 @@
         NSString *baseURL = self.baseURL;
         return [NSString stringWithFormat:@"%@/%@",baseURL,self.pathURL];
     }
+}
+
+- (id<SFURLTaskInteractionProtocol>)interaction {
+    return _interaction?:({
+        _interaction = [SFURLTaskInteraction new];
+        _interaction;
+    });
 }
 
 @end

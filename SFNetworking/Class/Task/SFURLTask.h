@@ -29,7 +29,8 @@ typedef NS_ENUM(NSInteger,SFURLSerializerType) {
 @optional
 @property (nonatomic,copy) NSDictionary *(^appendBuiltinParameters)(SFURLTask *task);
 @property (nonatomic,copy) NSDictionary *(^appendBuiltinHTTPHeaders)(SFURLTask *task);
-- (NSDictionary *)taskAppendBuiltinParametersForRequest:(SFURLTask *)task;
+- (NSDictionary *)taskAppendBuiltinParametersForRequest:(SFURLTask *)task
+                                   andCurrentParameters:(NSDictionary *)currentParameters;
 - (NSDictionary *)taskAppendBuiltinHTTPHeadersForRequest:(SFURLTask *)task;
 @end
 
@@ -45,26 +46,31 @@ typedef NS_ENUM(NSInteger,SFURLSerializerType) {
 @end
 
 #pragma mark - 请求与界面交互
+@protocol SFURLTaskRequestInteractionProtocol<NSObject>
+@optional
+@property (nonatomic,weak) UIView *container;
+- (void)task:(SFURLTask *)task beginInteractionWithRequest:(SFURLRequest *)request;
+- (void)taskEndRequestInteraction:(SFURLTask *)task;
+@end
+
+@protocol SFURLTaskRespondInteractionProtocol<NSObject>
+@optional
+@property (nonatomic,weak) UIView *container;
+@property (nonatomic,assign) BOOL showMessageWhileSuccess;
+- (void)task:(SFURLTask *)task beginInteractionWithResponse:(SFURLResponse *)response;
+- (void)taskEndResponseInteraction:(SFURLTask *)task;
+@end
+
 @protocol SFURLTaskInteractionDelegate<NSObject>
 @optional
 - (void)task:(SFURLTask *)task beginInteractionWithRequest:(SFURLRequest *)request;
 - (void)task:(SFURLTask *)task endInteractionWithResponse:(SFURLResponse *)response;
 @end
 
-@protocol SFURLTaskInteractionResponderProtocol<NSObject>
-@property (nonatomic,weak) UIView *container;
-@property (nonatomic,assign) UIEdgeInsets containerInset;
-@end
-
 @protocol SFURLTaskInteractionProtocol<NSObject>
-@optional
+@property (nonatomic,strong) id<SFURLTaskRequestInteractionProtocol> request;
+@property (nonatomic,strong) id<SFURLTaskRespondInteractionProtocol> respond;
 @property (nonatomic,weak) id<SFURLTaskInteractionDelegate> delegate;
-@property (nonatomic,copy) id<SFURLTaskInteractionResponderProtocol> (^loadingResponder)(SFURLTask *task, SFURLRequest *request);
-@property (nonatomic,copy) id<SFURLTaskInteractionResponderProtocol> (^completeResponder)(SFURLTask *task, SFURLResponse *response);
-- (id<SFURLTaskInteractionResponderProtocol>)task:(SFURLTask *)task
-                       loadingResponderForRequest:(SFURLRequest *)request;
-- (id<SFURLTaskInteractionResponderProtocol>)task:(SFURLTask *)task
-                     completeResponderForResponse:(SFURLResponse *)response;
 @end
 
 #pragma mark - 请求回调
@@ -91,6 +97,7 @@ typedef NS_ENUM(NSInteger,SFURLSerializerType) {
 @property (nonatomic,strong) SFURLRequest *request;
 @property (nonatomic,strong) id<SFURLTaskFilterProtocol> filter;
 @property (nonatomic,strong) id<SFURLTaskInteractionProtocol> interaction;
+@property (nonatomic,strong) id<SFURLTaskInteractionProtocol> endInteraction;
 @property (nonatomic,strong) id<SFURLTaskRequestSerializerProtocol> requestSerializer;
 @property (nonatomic,strong) id<SFURLTaskResponseSerializerProtocol> responseSerializer;
 @property (nonatomic,copy) void (^willSend)(SFURLTask *task);

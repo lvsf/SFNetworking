@@ -8,6 +8,6 @@
 
 #import "SFHTTPTask.h"
 
-@interface ZSHTTPTaskConfiguration : NSObject<SFURLTaskRequestSerializerProtocol,SFURLTaskResponseSerializerProtocol,SFURLTaskFilterProtocol,SFURLTaskInteractionProtocol,SFURLTaskDebugDelegate>
+@interface ZSHTTPTaskConfiguration : NSObject<SFURLTaskRequestSerializerProtocol,SFURLTaskResponseSerializerProtocol,SFURLTaskFilterProtocol,SFURLTaskDebugDelegate>
 
 @end

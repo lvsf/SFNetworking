@@ -23,7 +23,7 @@ NSDictionary *SFHTTPRequestParameters(SFHTTPTask *task) {
         [parameters addEntriesFromDictionary:task.requestSerializer.appendBuiltinParameters(task)];
     }
     else if ([task.requestSerializer respondsToSelector:@selector(appendBuiltinParameters)]) {
-        [parameters addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinParametersForRequest:task]];
+        [parameters addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinParametersForRequest:task andCurrentParameters:parameters]];
     }
     return parameters;
 };
@@ -35,7 +35,7 @@ NSDictionary *SFHTTPRequestHeaders(SFHTTPTask *task) {
         [HTTPHeaders addEntriesFromDictionary:task.requestSerializer.appendBuiltinHTTPHeaders(task)];
     }
     else if ([task.requestSerializer respondsToSelector:@selector(taskAppendBuiltinHTTPHeadersForRequest:)]) {
-        [HTTPHeaders addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinParametersForRequest:task]];
+        [HTTPHeaders addEntriesFromDictionary:[task.requestSerializer taskAppendBuiltinHTTPHeadersForRequest:task]];
     }
     return HTTPHeaders;
 };

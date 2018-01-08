@@ -13,6 +13,7 @@
 @implementation SFHTTPTask (ZSLYAdd)
 
 + (instancetype)zsly_task {
+    NSURLSessionTask
     SFHTTPTask *task = [self new];
     ZSHTTPTaskConfiguration *configuration = [ZSHTTPTaskConfiguration new];
     task.requestSerializerType = SFURLSerializerTypeJSON;
@@ -20,7 +21,6 @@
     task.method = SFHTTPMethodPOST;
     task.baseURL = @"http://www.baidu.com/";
     task.page = [SFURLTaskPage new];
-    task.interaction = configuration;
     task.filter = configuration;
     task.requestSerializer = configuration;
     task.responseSerializer = configuration;

@@ -35,9 +35,7 @@
 }
 
 - (void)sendTask:(SFURLTask *)task {
-    __weak typeof(task) w_task = task;
     dispatch_async(self.taskQueue, ^{
-        __strong typeof(w_task) task = w_task;
         [self sendTask:task completion:nil];
     });
 }
@@ -138,13 +136,16 @@
 }
 
 - (void)prepareSendTask:(SFURLTask *)task {
-    if ([task.interaction.delegate respondsToSelector:@selector(task:beginInteractionWithRequest:)]) {
-        [task.interaction.delegate task:task beginInteractionWithRequest:task.request];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([task.interaction.delegate respondsToSelector:@selector(task:beginInteractionWithRequest:)]) {
+            [task.interaction.delegate task:task beginInteractionWithRequest:task.request];
+        }
+    });
 }
 
 - (void)willSendTask:(SFURLTask *)task {
     dispatch_async(dispatch_get_main_queue(), ^{
+        task.request.sendDate = [NSDate date];
         if (task.willSend) {
             task.willSend(task);
         }
@@ -200,6 +201,7 @@
 
 - (void)completeTask:(SFURLTask *)task response:(SFURLResponse *)response {
     dispatch_async(dispatch_get_main_queue(), ^{
+        task.request.completeDate = [NSDate date];
         SFURLError *error = [self shouldCompleteTask:task response:response];
         if (!error) {
             if (task.complete) {
