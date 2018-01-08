@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = 'SFNetworking'
-    s.version      = '0.0.1'
+    s.version      = '0.0.2'
     s.summary      = '简易的请求库'
     s.homepage     = 'https://github.com/lvsf/SFNetworking'
     s.license      = 'MIT'

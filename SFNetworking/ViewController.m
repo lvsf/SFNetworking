@@ -21,8 +21,9 @@
     [super viewDidLoad];
 
     SFHTTPTask *api = [SFHTTPTask zsly_task];
-    api.parameters = @{@"uid":@"123"};
-    api.method = SFHTTPMethodPOST;
+    api.taskURL = @"http://itunes.apple.com/lookup";
+    api.parameters = @{@"id":@"1135177390"};
+    api.method = SFHTTPMethodGET;
 
     self.sf_network[@"testApi"] = api;
     self.sf_network.sendTask(api);
