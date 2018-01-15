@@ -41,6 +41,7 @@ NSDictionary *SFHTTPRequestHeaders(SFHTTPTask *task) {
 };
 
 @implementation SFHTTPTask
+@synthesize identifier = _identifier;
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -60,21 +61,24 @@ NSDictionary *SFHTTPRequestHeaders(SFHTTPTask *task) {
 }
 
 - (NSString *)identifier {
-    if (self.taskURL) {
-        return [NSString stringWithFormat:@"%@?%@&%@&%@",
-                self.taskURL,
-                SFHTTPRequestParameters(self),
-                SFHTTPRequestHeaders(self),
-                @(self.method)];
-    } else {
-        NSString *baseURL = self.baseURL;
-        return [NSString stringWithFormat:@"%@/%@?%@&%@&%@",
-                baseURL,
-                self.pathURL,
-                SFHTTPRequestParameters(self),
-                SFHTTPRequestHeaders(self),
-                @(self.method)];
-    }
+    return _identifier?:({
+        if (self.taskURL) {
+            _identifier =  [NSString stringWithFormat:@"%@?%@&%@&%@",
+                            self.taskURL,
+                            SFHTTPRequestParameters(self),
+                            SFHTTPRequestHeaders(self),
+                            @(self.method)];
+        } else {
+            NSString *baseURL = self.baseURL;
+            _identifier =  [NSString stringWithFormat:@"%@/%@?%@&%@&%@",
+                            baseURL,
+                            self.pathURL,
+                            SFHTTPRequestParameters(self),
+                            SFHTTPRequestHeaders(self),
+                            @(self.method)];
+        }
+        _identifier;
+    });
 }
 
 @end
