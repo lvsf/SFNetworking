@@ -2,11 +2,13 @@
 //  AppDelegate.m
 //  SFNetworking
 //
-//  Created by YunSL on 2017/12/11.
-//  Copyright © 2017年 YunSL. All rights reserved.
+//  Created by YunSL on 2019/3/15.
+//  Copyright © 2019年 YunSL. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import <AFNetworkReachabilityManager.h>
 
 @interface AppDelegate ()
 
@@ -14,9 +16,17 @@
 
 @implementation AppDelegate
 
+- (UIWindow *)window {
+    return _window?:({
+        _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _window.backgroundColor = [UIColor whiteColor];
+        _window;
+    });
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [self.window makeKeyAndVisible];
+    [self.window setRootViewController:[ViewController new]];
     return YES;
 }
 
