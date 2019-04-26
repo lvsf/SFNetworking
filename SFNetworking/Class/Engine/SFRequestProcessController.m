@@ -20,24 +20,20 @@
     return self;
 }
 
-- (SFRequestError *)shouldSendRequestTask:(SFRequestTask *)requestTask withRequest:(SFRequest *)request withConfiguration:(SFRequestTaskConfiguration *)configuration {
-    if (!request.baseURL && !request.taskURL && !configuration.baseURL) {
-        return [SFRequestError errorWithCustomCode:SFURLErrorCustomCodeInvaildRequest
-                                            message:@"无效的请求"];
-    }
-    SFRequestTask *containTask = [[SFNetworkingEngine defaultEngine] containTask:requestTask];
-    if (containTask && [containTask.session isEqual:requestTask.session]) {
-        return [SFRequestError errorWithCustomCode:SFURLErrorCustomCodeFrequently
-                                           message:@"请求太频繁"];
-    }
+- (SFRequestError *)shouldSendRequestTask:(SFRequestTask *)requestTask withRequest:(nonnull SFRequest *)request {
+    // 检测网络环境
     if ([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
-        return [SFRequestError errorWithCustomCode:SFURLErrorCustomCodeNetworkNotReachable
-                                           message:@"网络未连接"];
+        return [SFRequestError requestErrorWithCustomCode:SFURLErrorCustomCodeNetworkNotReachable
+                                           message:@"SFURLErrorCustomCodeNetworkNotReachable"];
     }
     return nil;
 }
 
 - (BOOL)shouldCompleteRequestTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response {
+    return YES;
+}
+
+- (BOOL)shouldCallbackCompleteForRequestTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response {
     return YES;
 }
 

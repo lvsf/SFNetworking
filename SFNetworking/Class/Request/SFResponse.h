@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SFResponse : NSObject
 @property (nonatomic,assign) BOOL success;
-@property (nonatomic,assign) NSInteger status;
 @property (nonatomic,assign) SFURLErrorCode code;
 @property (nonatomic,assign) SFURLErrorCustomCode customCode;
+@property (nonatomic,copy) NSString *status;
 @property (nonatomic,copy) NSString *message;
 @property (nonatomic,strong) id responseObject;
 + (instancetype)responseWithError:(SFRequestError *)error;

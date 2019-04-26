@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFRequest.h"
 #import "SFRequestTask.h"
-#import "SFRequestTaskConfiguration.h"
 #import "SFRequestGroup.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,10 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL cancelTaskAutomatic;
 @property (nonatomic,copy,readonly) NSArray<SFRequestTask *> *tasks;
 - (void)cancelAllTasks;
-- (void)cancelTask:(SFRequestTask *)requestTask;
+- (void)cancelTaskGroup:(SFRequestGroup *)requestTaskGroup;
 - (void)sendTask:(SFRequestTask *)requestTask;
 - (void)sendTaskGroup:(SFRequestGroup *)requestTaskGroup;
-- (void)cancelTaskGroup:(SFRequestGroup *)requestTaskGroup;
 @end
 
 NS_ASSUME_NONNULL_END

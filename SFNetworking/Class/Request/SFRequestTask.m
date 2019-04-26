@@ -7,37 +7,44 @@
 //
 
 #import "SFRequestTask.h"
-
-NSString *SFRequestTaskIdentifier(SFRequestTask *requestTask) {
-    if (requestTask.request.taskURL) {
-        return [NSString stringWithFormat:@"%@?p=%@&bp=%@",
-                requestTask.request.taskURL,
-                requestTask.request.parameters?:@"",
-                requestTask.configuration.builtinParameters?:@""];
-    } else {
-        NSString *baseURL = requestTask.configuration.baseURL?:requestTask.request.baseURL;
-        return  [NSString stringWithFormat:@"%@/%@?p=%@&bp=%@",
-                 baseURL,
-                 requestTask.request.pathURL,
-                 requestTask.request.parameters?:@"",
-                 requestTask.configuration.builtinParameters?:@""];
-    }
-};
+#import "SFNetworkingEngine.h"
 
 @implementation SFRequestTask
 
-+ (instancetype)taskWithRequest:(SFRequest *)request configuration:(SFRequestTaskConfiguration *)configuration {
-    SFRequestTask *task = [self new];
-    task.request = request;
-    task.configuration = configuration;
-    return task;
-}
-
 - (instancetype)init {
     if (self = [super init]) {
-        _status = SFRequestTaskStatusPrepare;
+        _requestStatus = SFRequestTaskStatusPrepare;
+        _record = NO;
+#ifdef DEBUG
+        _record = YES;
+#endif
+        
     }
     return self;
+}
+
+- (void)cancel {
+    [[SFNetworkingEngine defaultEngine] cancelTask:self];
+}
+
+- (void)completeWithResponse:(SFResponse *)response {
+    [[SFNetworkingEngine defaultEngine] completeTask:self withResponse:response];
+}
+
+- (SFRequestSerializer<SFRequestSerializerProtocol> *)requestSerializer {
+    return _requestSerializer?:({
+        _requestSerializer = [SFRequestSerializer new];
+        _requestSerializer.serializerType = SFResponseSerializerTypeJSON;
+        _requestSerializer;
+    });
+}
+
+- (SFResponseSerializer<SFResponseSerializerProtocol> *)responseSerializer {
+    return _responseSerializer?:({
+        _responseSerializer = [SFResponseSerializer new];
+        _responseSerializer.serializerType = SFResponseSerializerTypeJSON;
+        _responseSerializer;
+    });
 }
 
 @end

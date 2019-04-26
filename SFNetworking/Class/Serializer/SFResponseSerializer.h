@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SFResponse.h"
 
 typedef NS_ENUM(NSInteger,SFResponseSerializerType) {
     SFResponseSerializerTypeHTTP = 0,
@@ -20,16 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 @class SFRequestTask,SFResponse;
 @protocol SFResponseSerializerProtocol <NSObject>
 @required
-@property (nonatomic,copy) NSArray<NSString *> *codeKeys;
-@property (nonatomic,copy) NSArray<NSString *> *messageKeys;
-@property (nonatomic,copy) NSArray<NSNumber *> *successStatusVaules;
-@property (nonatomic,copy) BOOL (^successReformer)(SFResponse *response, id responseObject);
-@property (nonatomic,copy) NSString *_Nullable (^messageReformer)(SFResponse *response, id responseObject);
-
-- (SFResponse *)responseWithResponseObject:(id)responseObject error:(NSError * _Nullable)error;
+- (SFResponse *)responseWithResponseObject:(nullable id)responseObject error:(nullable SFRequestError *)error;
 @end
 
 @interface SFResponseSerializer : NSObject<SFResponseSerializerProtocol>
+@property (nonatomic,assign) BOOL removesKeysWithNullValues;
+@property (nonatomic,copy) NSArray<NSString *> *statusKeys;
+@property (nonatomic,copy) NSArray<NSString *> *messageKeys;
+@property (nonatomic,copy) NSArray<NSString *> *successStatuses;
+@property (nonatomic,copy) BOOL (^successReformer)(SFResponse *response, id responseObject);
+@property (nonatomic,copy) NSString *_Nullable (^messageReformer)(SFResponse *response, id responseObject);
 @property (nonatomic,assign) SFResponseSerializerType serializerType;
 @end
 

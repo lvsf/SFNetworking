@@ -10,19 +10,26 @@
 
 @implementation SFRequestError
 
-+ (instancetype)errorWithCode:(SFURLErrorCode)code message:(NSString *)message {
-    SFRequestError *error = [self new];
-    error.code = code;
-    error.message = message;
-    return error;
++ (instancetype)requestErrorWithError:(NSError *)error {
+    SFRequestError *requestError = [self new];
+    requestError.code = error.code;
+    requestError.message = error.localizedDescription;
+    return requestError;
 }
 
-+ (instancetype)errorWithCustomCode:(SFURLErrorCustomCode)customCode message:(NSString *)message {
-    SFRequestError *error = [self new];
-    error.code = SFURLErrorCustom;
-    error.customCode = customCode;
-    error.message = message;
-    return error;
++ (instancetype)requestErrorWithCode:(SFURLErrorCode)code message:(NSString *)message {
+    SFRequestError *requestError = [self new];
+    requestError.code = code;
+    requestError.message = message;
+    return requestError;
+}
+
++ (instancetype)requestErrorWithCustomCode:(SFURLErrorCustomCode)customCode message:(NSString *)message {
+    SFRequestError *requestError = [self new];
+    requestError.code = SFURLErrorCustom;
+    requestError.customCode = customCode;
+    requestError.message = message;
+    return requestError;
 }
 
 @end

@@ -7,15 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFNetworkingEngine.h"
-#import "SFRequestCacheComponentProtocol.h"
+#import "SFRequestCacheProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SFRequestCache : NSObject<SFRequestTaskDelegate>
-@property (nonatomic,strong) id<SFRequestCacheComponentProtocol> component;
-+ (instancetype)cache;
-
+@interface SFRequestCache : NSObject<SFRequestCacheProtocol>
 @end
 
 NS_ASSUME_NONNULL_END

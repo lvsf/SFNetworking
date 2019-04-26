@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SFRequest.h"
 #import "SFRequestTask.h"
+#import "SFRequestReactionProtocol.h"
 
 @class SFRequestSesssion;
 
@@ -20,15 +21,15 @@ typedef NS_ENUM(NSInteger,SFRequestGroupType) {
 };
 
 @interface SFRequestGroup : NSObject
-@property (nonatomic,copy) NSString *key;
 @property (nonatomic,weak) SFRequestSesssion *session;
 @property (nonatomic,assign) SFRequestGroupType type;
+@property (nonatomic,copy,nullable) NSArray<SFRequestTask *> *tasks;
+@property (nonatomic,strong,nullable) dispatch_queue_t queue;
 @property (nonatomic,strong,nullable) NSDate *beginDate;
 @property (nonatomic,strong,nullable) NSDate *endDate;
 @property (nonatomic,strong,nullable) id<SFRequestReactionProtocol> reaction;
-@property (nonatomic,copy) NSArray<SFRequestTask *> *tasks;
-@property (nonatomic,copy) void (^complete)(SFRequestGroup *requestGroup);
-@property (nonatomic,copy) void (^process)(SFRequestGroup *requestGroup, SFRequestTask *requestTask, SFResponse *response);
+@property (nonatomic,copy,nullable) void (^process)(SFRequestGroup *requestGroup, SFRequestTask *requestTask, SFResponse *response);
+@property (nonatomic,copy,nullable) void (^complete)(SFRequestGroup *requestGroup);
 + (instancetype)requestGroupWithType:(SFRequestGroupType)groupType;
 @end
 

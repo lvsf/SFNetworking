@@ -8,10 +8,16 @@
 
 #import "SFRequest.h"
 
+inline NSString *SFRequestMethodDescription(SFRequestMethod method) {
+    switch (method) {
+        case SFRequestMethodGET:return @"GET";break;
+        case SFRequestMethodPOST:return @"POST";break;
+    }
+};
+
 @interface SFRequest()
 @property (nonatomic,strong) id<SFHTTPRequestPageProtocol> page;
 @property (nonatomic,copy) NSDictionary *HTTPHeaders;
-@property (nonatomic,copy) NSSet<NSString *> *acceptableContentTypes;
 @property (nonatomic,copy) NSArray<id<SFHTTPRequestFormDateProtocol>> *formDatas;
 @end
 
@@ -24,20 +30,15 @@
     return self;
 }
 
-- (SFRequestSerializer<SFRequestSerializerProtocol> *)requestSerializer {
-    return _requestSerializer?:({
-        _requestSerializer = [SFRequestSerializer new];
-        _requestSerializer.serializerType = SFResponseSerializerTypeJSON;
-        _requestSerializer;
-    });
++ (instancetype)requestWithPathURL:(NSString *)pathURL parameters:(NSDictionary *)parameters {
+    SFRequest *request = [SFRequest new];
+    request.pathURL = pathURL;
+    request.parameters = parameters;
+    return request;
 }
 
-- (SFResponseSerializer<SFResponseSerializerProtocol> *)responseSerializer {
-    return _responseSerializer?:({
-        _responseSerializer = [SFResponseSerializer new];
-        _responseSerializer.serializerType = SFResponseSerializerTypeJSON;
-        _responseSerializer;
-    });
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ taskURL:%@ baseURL:%@ pathURL:%@ subPathURL:%@ module:%@ version:%@ parameters:%@",[super description],_taskURL,_baseURL,_pathURL,_subPathURL,_module,_version,_parameters];
 }
 
 @end

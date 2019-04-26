@@ -9,40 +9,41 @@
 #import <Foundation/Foundation.h>
 #import "SFRequest.h"
 #import "SFRequestAttributes.h"
-#import "SFRequestTaskConfiguration.h"
-#import "SFRequestReactionProtocol.h"
 #import "SFResponse.h"
+#import "SFRequestSerializer.h"
+#import "SFResponseSerializer.h"
+#import "SFRequestReactionProtocol.h"
 
-@class SFRequestSesssion,SFRequestTask;
-
-extern NSString *SFRequestTaskIdentifier(SFRequestTask *requestTask);
+@class SFRequestSesssion,SFRequestGroup,SFRequestTask;
 
 typedef NS_ENUM(NSInteger,SFRequestTaskStatus) {
     SFRequestTaskStatusPrepare = 0,
-    SFRequestTaskStatusCancelling,
+    SFRequestTaskStatusCancel,
     SFRequestTaskStatusSending,
+    SFRequestTaskStatusRespond,
     SFRequestTaskStatusComplete,
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SFRequestTask : NSObject
-@property (nonatomic,copy) NSString *key;
+@property (nonatomic,assign) BOOL record;
 @property (nonatomic,copy) NSString *identifier;
 @property (nonatomic,weak) SFRequestSesssion *session;
-@property (nonatomic,assign) SFRequestTaskStatus status;
-@property (nonatomic,strong,nullable) NSDate *beginDate;
-@property (nonatomic,strong,nullable) NSDate *endDate;
+@property (nonatomic,weak) SFRequestGroup *group;
+@property (nonatomic,assign) SFRequestTaskStatus requestStatus;
 @property (nonatomic,strong,nullable) NSDate *requestDate;
 @property (nonatomic,strong,nullable) NSDate *responseDate;
 @property (nonatomic,strong) SFRequest *request;
-@property (nonatomic,strong) SFRequestTaskConfiguration *configuration;
 @property (nonatomic,strong,nullable) SFRequestAttributes *requestAttributes;
 @property (nonatomic,strong,nullable) SFResponse *response;
-@property (nonatomic,strong,nullable) id<SFRequestReactionProtocol> reaction;
+@property (nonatomic,strong) SFRequestSerializer<SFRequestSerializerProtocol> *requestSerializer;
+@property (nonatomic,strong) SFResponseSerializer<SFResponseSerializerProtocol> *responseSerializer;
+@property (nonatomic,strong) id<SFRequestReactionProtocol> reaction;
 @property (nonatomic,copy) void (^complete)(SFRequestTask *requestTask, SFResponse *response);
 @property (nonatomic,copy) void (^completeFromCache)(SFRequestTask *requestTask, SFResponse *response);
-+ (instancetype)taskWithRequest:(SFRequest *)request configuration:(SFRequestTaskConfiguration *)configuration;
+- (void)cancel;
+- (void)completeWithResponse:(SFResponse *)response;
 @end
 
 NS_ASSUME_NONNULL_END

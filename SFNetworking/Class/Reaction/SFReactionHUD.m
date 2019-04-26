@@ -8,6 +8,7 @@
 
 #import "SFReactionHUD.h"
 #import <MBProgressHUD.h>
+#import "SFRequestTask.h"
 
 @interface SFReactionHUD()
 @property (nonatomic,strong) MBProgressHUD *HUD;
@@ -16,14 +17,31 @@
 @implementation SFReactionHUD
 @synthesize reactionView = _reactionView;
 
-- (void)reactionBeginForRequstTask:(SFRequestTask *)requestTask {
-    NSLog(@"[SFReactionHUD] 开始请求");
-    _HUD = [MBProgressHUD showHUDAddedTo:self.reactionView animated:YES];
++ (instancetype)reactionWithReactionView:(UIView *)reactionView {
+    SFReactionHUD *reaction = [SFReactionHUD new];
+    reaction.reactionView = reactionView;
+    return reaction;
 }
 
-- (void)reactionEndForRequstTask:(SFRequestTask *)requestTask {
-    [_HUD hideAnimated:YES];
+- (void)requestReactionToRequestTask:(SFRequestTask *)requestTask {
+    NSLog(@"[SFReactionHUD] 开始请求");
+    _HUD = [MBProgressHUD showHUDAddedTo:self.reactionView animated:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)respondReactionToRequestTask:(SFRequestTask *)requestTask {
     NSLog(@"[SFReactionHUD] 请求完成");
+    if (requestTask.response.message.length > 0) {
+        [_HUD setMode:MBProgressHUDModeText];
+        [_HUD.label setText:requestTask.response.message];
+        [_HUD.label setNumberOfLines:0];
+        [_HUD.label setFont:[UIFont boldSystemFontOfSize:16]];
+        [_HUD hideAnimated:YES afterDelay:1.5];
+    }
+    else {
+        [_HUD hideAnimated:YES];
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 @end

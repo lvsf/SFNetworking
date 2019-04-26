@@ -9,7 +9,7 @@
 #import "SFRequestSesssion.h"
 #import "SFNetworkingEngine.h"
 
-@interface SFRequestSesssion()<SFRequestTaskDelegate>
+@interface SFRequestSesssion()<SFNetworkingEngineDelegate>
 @property (nonatomic,strong) NSMutableArray<SFRequestTask *> *sessionTasks;
 @end
 
@@ -30,8 +30,10 @@
     }
 }
 
-- (void)requestTask:(SFRequestTask *)requestTask completeWithResponse:(SFResponse *)response {
-    [self.sessionTasks removeObject:requestTask];
+- (void)networkingEngine:(SFNetworkingEngine *)engine endHandleRequestTask:(nonnull SFRequestTask *)requestTask withResponse:(nonnull SFResponse *)response {
+    if ([requestTask.session isEqual:self]) {
+        [self.sessionTasks removeObject:requestTask];
+    }
 }
 
 - (void)sendTask:(SFRequestTask *)requestTask {
@@ -49,24 +51,17 @@
 
 - (void)cancelTaskGroup:(SFRequestGroup *)requestTaskGroup {
     [requestTaskGroup.tasks enumerateObjectsUsingBlock:^(SFRequestTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self cancelTask:obj];
+        [obj cancel];
     }];
 }
 
 - (void)cancelAllTasks {
     [self.tasks enumerateObjectsUsingBlock:^(SFRequestTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self cancelTask:obj];
+        [obj cancel];
     }];
 }
 
-- (void)cancelTask:(SFRequestTask *)requestTask {
-    [[SFNetworkingEngine defaultEngine] cancelTask:requestTask];
-}
-
 - (void)_willSendTask:(SFRequestTask *)requestTask {
-    if (requestTask.configuration == nil) {
-        requestTask.configuration = [SFRequestTaskConfiguration new];
-    }
     [self.sessionTasks addObject:requestTask];
     [requestTask setSession:self];
 }

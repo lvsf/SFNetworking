@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class SFRequestTask,SFResponse;
-
 typedef NS_ENUM(NSInteger,SFRequestKind) {
     SFRequestKindHTTP = 0,
     SFRequestKindLoad,
@@ -24,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSDictionary *parameters;
 @property (nonatomic,copy) NSDictionary *HTTPHeaders;
 @property (nonatomic,copy) NSSet<NSString *> *acceptableContentTypes;
-@property (nonatomic,copy,nullable) void (^complete)(SFRequestTask *requestTask, SFResponse *response);
 @end
 
 NS_ASSUME_NONNULL_END

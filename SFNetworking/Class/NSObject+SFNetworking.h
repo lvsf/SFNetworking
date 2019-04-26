@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (SFNetworking)
-@property (nonatomic,strong,readonly) SFRequestSesssion *requestSession;
+@property (nonatomic,strong,readonly) SFRequestSesssion *networking_session;
 @end
 
 NS_ASSUME_NONNULL_END

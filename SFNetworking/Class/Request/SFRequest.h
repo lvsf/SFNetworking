@@ -7,25 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFRequestSerializer.h"
-#import "SFResponseSerializer.h"
+#import "SFRequestPage.h"
 
 typedef NS_ENUM(NSInteger,SFRequestMethod) {
     SFRequestMethodGET = 0,
     SFRequestMethodPOST
 };
 
-static inline NSString *SFRequestMethodDescription(SFRequestMethod method) {
-    switch (method) {
-        case SFRequestMethodGET:return @"GET";break;
-        case SFRequestMethodPOST:return @"POST";break;
-    }
-};
+extern NSString *SFRequestMethodDescription(SFRequestMethod method);
 
 NS_ASSUME_NONNULL_BEGIN
-
-@protocol SFHTTPRequestPageProtocol <NSObject>
-@end
 
 @protocol SFHTTPRequestFormDateProtocol <NSObject>
 @property (nonatomic,strong) NSData *data;
@@ -39,16 +30,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) SFRequestMethod method;
 @property (nonatomic,copy) NSString *taskURL;
 @property (nonatomic,copy) NSString *baseURL;
-@property (nonatomic,copy) NSString *pathURL;
+@property (nonatomic,copy) NSString *pathURL;    //baseURL/pathURL?parameters
+@property (nonatomic,copy) NSString *subPathURL; //baseURL/module/version/subPathURL?parameters
+@property (nonatomic,copy) NSString *module;
+@property (nonatomic,copy) NSString *version;
 @property (nonatomic,copy) NSDictionary *parameters;
-@property (nonatomic,strong,nullable) SFRequestSerializer<SFRequestSerializerProtocol> *requestSerializer;
-@property (nonatomic,strong,nullable) SFResponseSerializer<SFResponseSerializerProtocol> *responseSerializer;
+@property (nonatomic,copy) NSArray<NSString *> *acceptableContentTypes;
+
++ (instancetype)requestWithPathURL:(NSString *)pathURL parameters:(NSDictionary *)parameters;
+
 @end
 
 @interface SFRequest(SFHTTPRequest)
-@property (nonatomic,strong) id<SFHTTPRequestPageProtocol> page;
+@property (nonatomic,strong) SFRequestPage *page;
 @property (nonatomic,copy) NSDictionary *HTTPHeaders;
-@property (nonatomic,copy) NSArray<NSString *> *acceptableContentTypes;
 @property (nonatomic,copy) NSArray<id<SFHTTPRequestFormDateProtocol>> *formDatas;
 @end
 

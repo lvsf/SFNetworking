@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SFReactionHUD : NSObject<SFRequestReactionProtocol>
-
++ (instancetype)reactionWithReactionView:(UIView *)reactionView;
 @end
 
 NS_ASSUME_NONNULL_END

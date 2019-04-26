@@ -13,10 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SFRequestRecorderProtocol <NSObject>
 @optional
-- (void)recordForRequestTaskBeginHandle:(SFRequestTask *)requestTask;
-- (void)recordForRequestTaskSend:(SFRequestTask *)requestTask;
-- (void)recordForRequestTaskCompleteSend:(SFRequestTask *)requestTask;
-- (void)recordForRequestTaskEndHandle:(SFRequestTask *)requestTask;
+- (void)recordForRequestTaskSendComplete:(SFRequestTask *)requestTask withResponse:(SFResponse *)response;
 @end
 
 NS_ASSUME_NONNULL_END

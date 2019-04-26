@@ -11,7 +11,7 @@
 
 @implementation NSObject (SFNetworking)
 
-- (SFRequestSesssion *)requestSession {
+- (SFRequestSesssion *)networking_session {
     return objc_getAssociatedObject(self, _cmd)?:({
         SFRequestSesssion *session = [SFRequestSesssion new];
         session.sessionName = NSStringFromClass(self.class);

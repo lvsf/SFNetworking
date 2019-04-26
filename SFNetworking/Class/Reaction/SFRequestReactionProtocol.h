@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SFRequestReactionProtocol <NSObject>
 @property (nonatomic,weak) UIView *reactionView;
-- (void)reactionBeginForRequstTask:(SFRequestTask *)requestTask;
-- (void)reactionEndForRequstTask:(SFRequestTask *)requestTask;
+- (void)requestReactionToRequestTask:(SFRequestTask *)requestTask;
+- (void)respondReactionToRequestTask:(SFRequestTask *)requestTask;
 @end
 
 NS_ASSUME_NONNULL_END

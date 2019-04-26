@@ -15,16 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SFRequestProcessContollerProtocol <NSObject>
 
-- (SFRequestError *)shouldSendRequestTask:(SFRequestTask *)requestTask withRequest:(SFRequest *)request withConfiguration:(SFRequestTaskConfiguration *)configuration;
+- (SFRequestError *)shouldSendRequestTask:(SFRequestTask *)requestTask withRequest:(SFRequest *)request;
 
-/**
- 是否结束请求任务/用于重发任务等
-
- @param requestTask 请求任务
- @param response    请求响应
- @return 返回NO时,不会结束界面交互也不会回调请求结果
- */
 - (BOOL)shouldCompleteRequestTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response;
+
+- (BOOL)shouldCallbackCompleteForRequestTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response;
+
 @end
 
 NS_ASSUME_NONNULL_END

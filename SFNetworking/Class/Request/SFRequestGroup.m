@@ -16,4 +16,11 @@
     return group;
 }
 
+- (void)setTasks:(NSArray<SFRequestTask *> *)tasks {
+    _tasks = tasks;
+    [_tasks enumerateObjectsUsingBlock:^(SFRequestTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.group = self;
+    }];
+}
+
 @end

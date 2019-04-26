@@ -12,6 +12,7 @@
 
 + (instancetype)responseWithError:(SFRequestError *)error {
     SFResponse *response = [SFResponse new];
+    response.success = NO;
     response.code = error.code;
     response.customCode = error.customCode;
     response.message = error.message;

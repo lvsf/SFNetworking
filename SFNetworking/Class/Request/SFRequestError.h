@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger,SFURLErrorCustomCode) {
-    SFURLErrorCustomCodeInvaildRequest            = -1,
-    SFURLErrorCustomCodeFrequently                = -2,
-    SFURLErrorCustomCodeNetworkNotReachable       = -3
+    SFURLErrorCustomCodeInvaildRequest            = -201,
+    SFURLErrorCustomCodeFrequently                = -202,
+    SFURLErrorCustomCodeNetworkNotReachable       = -203,
+    SFURLErrorCustomCodeInitiativeCancelled       = -204
 };
 
 typedef NS_ENUM(NSInteger,SFURLErrorCode) {
@@ -78,8 +79,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) SFURLErrorCode code;
 @property (nonatomic,assign) SFURLErrorCustomCode customCode;
 @property (nonatomic,copy) NSString *message;
-+ (instancetype)errorWithCode:(SFURLErrorCode)code message:(NSString *)message;
-+ (instancetype)errorWithCustomCode:(SFURLErrorCustomCode)customCode message:(NSString *)message;
++ (instancetype)requestErrorWithError:(NSError *)error;
++ (instancetype)requestErrorWithCode:(SFURLErrorCode)code message:(NSString *)message;
++ (instancetype)requestErrorWithCustomCode:(SFURLErrorCustomCode)customCode message:(NSString *)message;
 @end
 
 NS_ASSUME_NONNULL_END
