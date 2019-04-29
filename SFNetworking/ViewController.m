@@ -51,7 +51,8 @@
     self.listTask.responseSerializer.statusKey = @"errcode";
     self.listTask.responseSerializer.messageKey = @"errmsg";
     self.listTask.complete = ^(SFRequestTask * _Nonnull requestTask, SFResponse * _Nonnull response) {
-        
+        if (response.success) {
+        }
     };
     
     [self.networking_session sendTask:self.listTask];

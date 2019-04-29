@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) id<SFRequestReactionProtocol> reaction;
 @property (nonatomic,copy) void (^complete)(SFRequestTask *requestTask, SFResponse *response);
 @property (nonatomic,copy) void (^completeFromCache)(SFRequestTask *requestTask, SFResponse *response);
+
++ (SFRequestTask *)createByRequestTask:(SFRequestTask *)requestTask;
+
 - (void)cancel;
 - (void)completeWithResponse:(SFResponse *)response;
 

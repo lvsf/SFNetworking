@@ -11,6 +11,14 @@
 
 @implementation SFRequestTask
 
++ (SFRequestTask *)createByRequestTask:(SFRequestTask *)requestTask {
+    SFRequestTask *task = [SFRequestTask new];
+    task.request = requestTask.request;
+    task.requestSerializer = requestTask.requestSerializer;
+    task.responseSerializer = requestTask.responseSerializer;
+    return task;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         _operation = SFRequestTaskOperationLoad;
