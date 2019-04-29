@@ -25,13 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface SFResponseSerializer : NSObject<SFResponseSerializerProtocol>
+@property (nonatomic,assign) SFResponseSerializerType serializerType;
 @property (nonatomic,assign) BOOL removesKeysWithNullValues;
-@property (nonatomic,copy) NSArray<NSString *> *statusKeys;
-@property (nonatomic,copy) NSArray<NSString *> *messageKeys;
+@property (nonatomic,copy) NSString *statusKey;
+@property (nonatomic,copy) NSString *messageKey;
+@property (nonatomic,copy) NSString *successKey;
 @property (nonatomic,copy) NSArray<NSString *> *successStatuses;
 @property (nonatomic,copy) BOOL (^successReformer)(SFResponse *response, id responseObject);
 @property (nonatomic,copy) NSString *_Nullable (^messageReformer)(SFResponse *response, id responseObject);
-@property (nonatomic,assign) SFResponseSerializerType serializerType;
 @end
 
 NS_ASSUME_NONNULL_END

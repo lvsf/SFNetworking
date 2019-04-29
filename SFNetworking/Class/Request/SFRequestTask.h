@@ -24,6 +24,12 @@ typedef NS_ENUM(NSInteger,SFRequestTaskStatus) {
     SFRequestTaskStatusComplete,
 };
 
+typedef NS_ENUM(NSInteger,SFRequestTaskOperation) {
+    SFRequestTaskOperationLoad = 0,
+    SFRequestTaskOperationReload,
+    SFRequestTaskOperationLoadNext
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SFRequestTask : NSObject
@@ -31,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *identifier;
 @property (nonatomic,weak) SFRequestSesssion *session;
 @property (nonatomic,weak) SFRequestGroup *group;
+@property (nonatomic,assign) SFRequestTaskOperation operation;
 @property (nonatomic,assign) SFRequestTaskStatus requestStatus;
 @property (nonatomic,strong,nullable) NSDate *requestDate;
 @property (nonatomic,strong,nullable) NSDate *responseDate;
@@ -44,6 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void (^completeFromCache)(SFRequestTask *requestTask, SFResponse *response);
 - (void)cancel;
 - (void)completeWithResponse:(SFResponse *)response;
+
+- (void)reload;
+- (void)loadNext;
+
 @end
 
 NS_ASSUME_NONNULL_END

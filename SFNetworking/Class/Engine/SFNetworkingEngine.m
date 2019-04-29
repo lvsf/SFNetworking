@@ -148,20 +148,20 @@ static inline void SFNetworkingLog(NSString *message) {
 }
 
 - (void)completeTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response {
-    [requestTask setResponse:response];
     if (requestTask.requestStatus != SFRequestTaskStatusComplete) {
+        [requestTask setResponse:response];
         _dispatch_async_on_main_queue(^{
             BOOL shouldCallback = YES;
             if ([self.processController respondsToSelector:@selector(shouldCallbackCompleteForRequestTask:withResponse:)]) {
                 shouldCallback = [self.processController shouldCallbackCompleteForRequestTask:requestTask
                                                                                  withResponse:response];
             }
-            if (requestTask.complete && shouldCallback) {
-                requestTask.complete(requestTask, response);
-            }
             if (requestTask.completeForGroup) {
                 requestTask.completeForGroup(requestTask, response);
                 requestTask.completeForGroup = nil;
+            }
+            if (requestTask.complete && shouldCallback) {
+                requestTask.complete(requestTask, response);
             }
             [self.observers.allObjects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj respondsToSelector:@selector(networkingEngine:completeSendRequestTask:withResponse:)]) {
@@ -189,8 +189,8 @@ static inline void SFNetworkingLog(NSString *message) {
         return;
     }
     
-    [requestTask setRequestStatus:SFRequestTaskStatusSending];
     SFRequestAttributes *requestAttributes = [self _reformRequestAttributesForRequestTask:requestTask];
+    [requestTask setRequestStatus:SFRequestTaskStatusSending];
     if (_observers.count > 0) {
         _dispatch_async_on_main_queue(^{
             [self.observers.allObjects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -316,15 +316,18 @@ static inline void SFNetworkingLog(NSString *message) {
 - (void)_respondToHTTPTask:(SFRequestTask *)requestTask withResponseObject:(id)responseObject error:(NSError *)error  {
     // 请求完成回调的时候有可能请求已被取消
     if (requestTask.requestStatus == SFRequestTaskStatusSending) {
-        SFRequestError *requestError = nil;
-        if (error) {
-            requestError = [SFRequestError requestErrorWithError:error];
-        }
         [requestTask setResponseDate:[NSDate date]];
         [requestTask setRequestStatus:SFRequestTaskStatusRespond];
-        [self _completeRequestTask:requestTask
-                      withResponse:[requestTask.responseSerializer responseWithResponseObject:responseObject
-                                                                                        error:requestError]];
+        
+        SFRequestError *requestError = error?[SFRequestError requestErrorWithError:error]:nil;
+        SFResponse *resposne = [requestTask.responseSerializer responseWithResponseObject:responseObject error:requestError];
+        if (resposne.success) {
+            [requestTask.request.page updateWithResponseObject:responseObject];
+            if (requestTask.completeFromCache && requestTask.identifier) {
+                [self.cache cacheResponseObject:responseObject forRequestTask:requestTask];
+            }
+        }
+        [self _completeRequestTask:requestTask  withResponse:resposne];
     }
 }
 
@@ -334,10 +337,6 @@ static inline void SFNetworkingLog(NSString *message) {
 }
 
 - (void)_completeRequestTask:(SFRequestTask *)requestTask withResponse:(SFResponse *)response {
-    // 缓存数据
-    if (requestTask.completeFromCache && response.success && requestTask.identifier) {
-        [self.cache cacheResponseObject:response.responseObject forRequestTask:requestTask];
-    }
     _dispatch_async_on_main_queue(^{
         // 请求日志记录
         if (requestTask.record &&

@@ -36,13 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *version;
 @property (nonatomic,copy) NSDictionary *parameters;
 @property (nonatomic,copy) NSArray<NSString *> *acceptableContentTypes;
+@property (nonatomic,strong) SFRequestPage *page;
 
 + (instancetype)requestWithPathURL:(NSString *)pathURL parameters:(NSDictionary *)parameters;
 
 @end
 
 @interface SFRequest(SFHTTPRequest)
-@property (nonatomic,strong) SFRequestPage *page;
 @property (nonatomic,copy) NSDictionary *HTTPHeaders;
 @property (nonatomic,copy) NSArray<id<SFHTTPRequestFormDateProtocol>> *formDatas;
 @end

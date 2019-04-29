@@ -16,7 +16,6 @@ inline NSString *SFRequestMethodDescription(SFRequestMethod method) {
 };
 
 @interface SFRequest()
-@property (nonatomic,strong) id<SFHTTPRequestPageProtocol> page;
 @property (nonatomic,copy) NSDictionary *HTTPHeaders;
 @property (nonatomic,copy) NSArray<id<SFHTTPRequestFormDateProtocol>> *formDatas;
 @end

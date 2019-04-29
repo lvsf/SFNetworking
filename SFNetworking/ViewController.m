@@ -7,86 +7,77 @@
 //
 
 #import "ViewController.h"
-#import "NSObject+SFNetworking.h"
-
-#import "SFRequestGroup.h"
 
 #import "SFReactionHUD.h"
+#import "SFNetworkingEngine.h"
+#import "NSObject+SFNetworking.h"
 
 @interface ViewController ()
-@property (nonatomic,strong) id task;
-@property (nonatomic,strong) id lanuncher;
+@property (nonatomic,strong) SFRequestTask *listTask;
 @end
 
 @implementation ViewController
 
-- (SFRequest *)loginRequestWithUid:(NSString *)request {
-    SFRequest *r = [SFRequest new];
-    r.taskURL = @"http://www.baidu.com";
-    r.parameters = @{@"test":@"123456"};
-    r.HTTPHeaders = @{@"token":@"abc123"};
-    r.method = SFRequestMethodPOST;
-    return r;
-}
-
-- (SFRequest *)appRequest {
-    SFRequest *r = [SFRequest new];
-    r.method = SFRequestMethodGET;
-    r.taskURL = @"https://itunes.apple.com/lookup?id=1135177390";
-    return r;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
-    [self.view setBackgroundColor:[UIColor orangeColor]];
-    
-    SFRequest *login = [self loginRequestWithUid:@"a123"];
-    SFRequestTask *loginTask = [SFRequestTask new];
-    [loginTask setRequest:login];
-    [loginTask setComplete:^(SFRequestTask * _Nonnull requestTask, SFResponse * _Nonnull response) {
-        
-    }];
-    
-    SFRequest *app = [self appRequest];
-    SFRequestTask *appTask = [SFRequestTask new];
-    [appTask setRecord:YES];
-    [appTask setRequest:app];
-    [appTask setReaction:[SFReactionHUD reactionWithReactionView:self.view]];
-    [appTask setCompleteFromCache:^(SFRequestTask * _Nonnull requestTask, SFResponse * _Nonnull response) {
-        if (response.success) {
-            NSLog(@"缓存数据:%@",response.responseObject);
-        }
-    }];
-    appTask.responseSerializer.successReformer = ^BOOL(SFResponse * _Nonnull response, id  _Nonnull responseObject) {
-        NSDictionary *d = responseObject;
-        return ([d[@"resultCount"] integerValue] > 0);
-    };
-    appTask.responseSerializer.messageReformer = ^NSString * _Nullable(SFResponse * _Nonnull response, id  _Nonnull responseObject) {
-        NSDictionary *d = responseObject;
-        return ([d[@"resultCount"] integerValue] > 0)?response.message:@"返回结果为空";
-    };
-    //[self.networking_session sendTask:appTask];
+    NSDictionary *p = @{@"ringthemeId":@"34dfe0b3b8fc409386cb992c095e1aa3",
+                        @"status":@(0)};
+    NSData *p_data = [NSJSONSerialization dataWithJSONObject:p options:0 error:nil];
 
-    __block NSInteger i = 0;
-    SFRequestGroup *g = [SFRequestGroup requestGroupWithType:SFRequestGroupTypeBatch];
-    g.tasks = @[loginTask,appTask];
-    g.process = ^(SFRequestGroup * _Nonnull requestGroup, SFRequestTask * _Nonnull requestTask, SFResponse * _Nonnull response) {
-        if (i == 0) {
-        }
-        i++;
-        NSLog(@"SFRequestGroup process:%@",requestTask.requestAttributes.taskURL);
-    };
-    g.complete = ^(SFRequestGroup * _Nonnull requestGroup) {
-        NSLog(@"SFRequestGroup complete");
+    
+    SFRequest *listRequest = [SFRequest new];
+    listRequest.taskURL = @"http://app.quanyoo.com/userCenter/API/v3/book/clock/getBookClockList.do";
+    listRequest.parameters = @{@"bizParms":[[NSString alloc] initWithData:p_data encoding:NSUTF8StringEncoding]};
+    listRequest.page = [SFRequestPage new];
+    listRequest.page.firstPage = @(1);
+    listRequest.page.size = 25;
+    listRequest.page.requestPageKey = @"pageNow";
+    listRequest.page.requestPageSizeKey = @"pageSize";
+    listRequest.page.responsePageObjectKey = @"page";
+    listRequest.page.responsePageKey = @"pageNow";
+    listRequest.page.responsePageTotalKey = @"totalPage";
+    
+    self.listTask = [SFRequestTask new];
+    self.listTask.request = listRequest;
+    self.listTask.requestSerializer.serializerType = SFRequestSerializerTypeHTTP;
+    self.listTask.requestSerializer.builtinParameters = @{@"personId":@"0001SX10000000000ENW",
+                                                          @"accessToken":@"34a1f1de-c1fa-4a58-96ab-74314b1df546",
+                                                          @"terminal":@"1",
+                                                          @"terminalIMEI":@"89CC7D48-C645-4329-B14B-59528D0EF2F3",
+                                                          @"terminalOS":@"iOS 12.1"
+                                                          };
+    self.listTask.responseSerializer.successStatuses = @[@"0"];
+    self.listTask.responseSerializer.statusKey = @"errcode";
+    self.listTask.responseSerializer.messageKey = @"errmsg";
+    self.listTask.complete = ^(SFRequestTask * _Nonnull requestTask, SFResponse * _Nonnull response) {
+        
     };
     
-    [self.networking_session sendTaskGroup:g];
+    [self.networking_session sendTask:self.listTask];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-
+    SFRequest *request = [SFRequest new];
+    request.taskURL = @"http://app.quanyoo.com/userCenter/API/v3/person/getPersonInfo.do";
+    request.parameters = @{@"targetPersonId":@"0001SX10000000000ENW"};
+    
+    SFRequestTask *task = [SFRequestTask new];
+    task.request = request;
+    task.requestSerializer.serializerType = SFRequestSerializerTypeHTTP;
+    task.requestSerializer.builtinParameters = @{@"personId":@"0001SX10000000000ENW",
+                                                 @"accessToken":@"34a1f1de-c1fa-4a58-96ab-74314b1df546",
+                                                 @"terminal":@"1",
+                                                 @"terminalIMEI":@"89CC7D48-C645-4329-B14B-59528D0EF2F3",
+                                                 @"terminalOS":@"iOS 12.1"};
+    task.responseSerializer.successStatuses = @[@"0"];
+    task.responseSerializer.statusKey = @"errcode";
+    task.responseSerializer.messageKey = @"errmsg";
+    
+    [self.listTask loadNext];
+    [self.networking_session sendTask:self.listTask];
+    
+    //[self.networking_session sendTask:task];
 }
 
 

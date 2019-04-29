@@ -28,44 +28,60 @@
         response.responseObject = responseObject;
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dictionary = responseObject;
-            [_statusKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                id value = nil;
-                if ([obj containsString:@"."]) {
-                    value = [dictionary valueForKeyPath:obj];
+            // 返回信息
+            if (_messageKey) {
+                id messageValue = nil;
+                if ([_messageKey containsString:@"."]) {
+                    messageValue = [dictionary valueForKey:_messageKey];
                 }
-                else if ([dictionary.allKeys containsObject:obj]) {
-                    value = [dictionary objectForKey:obj];
+                else {
+                    messageValue = [dictionary objectForKey:_messageKey];
                 }
-                NSString *status = nil;
-                if ([value isKindOfClass:[NSString class]]) {
-                    status = value;
+                if ([messageValue isKindOfClass:[NSString class]]) {
+                    response.message = (NSString *)messageValue;
                 }
-                if ([value respondsToSelector:@selector(stringValue)]) {
-                    status = [value stringValue];
+                else if ([messageValue respondsToSelector:@selector(stringValue)]) {
+                    response.message = [messageValue stringValue];
                 }
-                if (status) {
-                    response.status = status;
-                    response.success = [self.successStatuses containsObject:response.status];
-                    *stop = YES;
+            }
+            // 返回状态
+            if (_statusKey) {
+                id statusValue = nil;
+                if ([_statusKey containsString:@"."]) {
+                    statusValue = [dictionary valueForKey:_statusKey];
                 }
-            }];
-            [_messageKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                id value = nil;
-                if ([obj containsString:@"."]) {
-                    value = [dictionary valueForKeyPath:obj];
+                else {
+                    statusValue = [dictionary objectForKey:_statusKey];
                 }
-                else if ([dictionary.allKeys containsObject:obj]) {
-                    value = [dictionary objectForKey:obj];
+                if ([statusValue isKindOfClass:[NSString class]]) {
+                    response.status = (NSString *)statusValue;
                 }
-                if (value) {
-                    response.message = value;
-                    *stop = YES;
+                else if ([statusValue respondsToSelector:@selector(stringValue)]) {
+                    response.status = [statusValue stringValue];
                 }
-            }];
-            if (self.successReformer) {
-                response.success = self.successReformer(response,responseObject);
+            }
+            // 返回结果
+            id successValue = nil;
+            if (_successKey) {
+                if ([_successKey containsString:@"."]) {
+                    successValue = [dictionary valueForKey:_successKey];
+                }
+                else {
+                    successValue = [dictionary objectForKey:_successKey];
+                }
+            }
+            if (successValue) {
+                response.success = [successValue boolValue];
+            }
+            else {
+                if (_successStatuses.count > 0 && response.status) {
+                    response.success = [_successStatuses containsObject:response.status];
+                }
             }
         }
+    }
+    if (self.successReformer) {
+        response.success = self.successReformer(response,responseObject);
     }
     if (self.messageReformer) {
         response.message = self.messageReformer(response,responseObject);

@@ -58,8 +58,8 @@
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     [parameters addEntriesFromDictionary:request.parameters];
     [parameters addEntriesFromDictionary:_builtinParameters];
-    if ([request.page respondsToSelector:@selector(requestPageParameters)]) {
-        [parameters addEntriesFromDictionary:[request.page requestPageParameters]];
+    if ([request.page respondsToSelector:@selector(parametersForRequest)]) {
+        [parameters addEntriesFromDictionary:[request.page parametersForRequest]];
     }
     return parameters;
 }

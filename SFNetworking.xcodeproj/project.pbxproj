@@ -23,6 +23,7 @@
 		1747BA142243888800E86BF2 /* SFRequestProcessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1747BA132243888800E86BF2 /* SFRequestProcessController.m */; };
 		1747BA18224388D500E86BF2 /* SFRequestRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1747BA17224388D500E86BF2 /* SFRequestRecorder.m */; };
 		1747BA1B22438B5900E86BF2 /* SFRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1747BA1A22438B5900E86BF2 /* SFRequestError.m */; };
+		174CA6D122754B21001F627F /* SFRequestPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 174CA6D022754B20001F627F /* SFRequestPage.m */; };
 		1752A1072272F3640093DC8C /* SFRequestAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1752A1062272F3640093DC8C /* SFRequestAttributes.m */; };
 		17537A8C2241DCC80096BCD6 /* SFRequestGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 17537A8B2241DCC80096BCD6 /* SFRequestGroup.m */; };
 		17537A902241DFBD0096BCD6 /* SFReactionHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 17537A8F2241DFBD0096BCD6 /* SFReactionHUD.m */; };
@@ -63,6 +64,8 @@
 		1747BA17224388D500E86BF2 /* SFRequestRecorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFRequestRecorder.m; sourceTree = "<group>"; };
 		1747BA1922438B5900E86BF2 /* SFRequestError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFRequestError.h; sourceTree = "<group>"; };
 		1747BA1A22438B5900E86BF2 /* SFRequestError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFRequestError.m; sourceTree = "<group>"; };
+		174CA6CF22754B20001F627F /* SFRequestPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRequestPage.h; sourceTree = "<group>"; };
+		174CA6D022754B20001F627F /* SFRequestPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRequestPage.m; sourceTree = "<group>"; };
 		1752A1052272F3640093DC8C /* SFRequestAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRequestAttributes.h; sourceTree = "<group>"; };
 		1752A1062272F3640093DC8C /* SFRequestAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRequestAttributes.m; sourceTree = "<group>"; };
 		17537A8A2241DCC80096BCD6 /* SFRequestGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFRequestGroup.h; sourceTree = "<group>"; };
@@ -188,10 +191,12 @@
 				1752A1062272F3640093DC8C /* SFRequestAttributes.m */,
 				1747BA1922438B5900E86BF2 /* SFRequestError.h */,
 				1747BA1A22438B5900E86BF2 /* SFRequestError.m */,
-				17537A8A2241DCC80096BCD6 /* SFRequestGroup.h */,
-				17537A8B2241DCC80096BCD6 /* SFRequestGroup.m */,
+				174CA6CF22754B20001F627F /* SFRequestPage.h */,
+				174CA6D022754B20001F627F /* SFRequestPage.m */,
 				1744AD4C223B9F8C00B7F806 /* SFRequestTask.h */,
 				1744AD4D223B9F8C00B7F806 /* SFRequestTask.m */,
+				17537A8A2241DCC80096BCD6 /* SFRequestGroup.h */,
+				17537A8B2241DCC80096BCD6 /* SFRequestGroup.m */,
 				1744AD40223B9BCF00B7F806 /* SFResponse.h */,
 				1744AD41223B9BCF00B7F806 /* SFResponse.m */,
 			);
@@ -311,6 +316,7 @@
 				1744AD4E223B9F8C00B7F806 /* SFRequestTask.m in Sources */,
 				1752A1072272F3640093DC8C /* SFRequestAttributes.m in Sources */,
 				1744AD26223B88E100B7F806 /* main.m in Sources */,
+				174CA6D122754B21001F627F /* SFRequestPage.m in Sources */,
 				1744AD18223B88DF00B7F806 /* AppDelegate.m in Sources */,
 				17537A902241DFBD0096BCD6 /* SFReactionHUD.m in Sources */,
 				1747BA142243888800E86BF2 /* SFRequestProcessController.m in Sources */,

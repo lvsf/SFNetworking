@@ -13,14 +13,28 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        _operation = SFRequestTaskOperationLoad;
         _requestStatus = SFRequestTaskStatusPrepare;
         _record = NO;
 #ifdef DEBUG
         _record = YES;
 #endif
-        
     }
     return self;
+}
+
+- (void)reload {
+    if (_request.page) {
+        _operation = SFRequestTaskOperationReload;
+        [_request.page reload];
+    }
+}
+
+- (void)loadNext {
+    if (_request.page) {
+        _operation = SFRequestTaskOperationLoadNext;
+        [_request.page loadNext];
+    }
 }
 
 - (void)cancel {
